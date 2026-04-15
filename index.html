@@ -11,105 +11,83 @@
 <title>ガラス価格表</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f5f4f0;
-  --surface: #ffffff;
-  --surface2: #f0ede8;
-  --accent: #1a1a2e;
-  --accent2: #e63946;
-  --text: #1a1a2e;
-  --text2: #6b6b6b;
-  --border: #ddd9d2;
-  --highlight: #fff3cd;
-  --highlight-border: #e6a817;
-  --success: #2d6a4f;
-  --tab-h: 56px;
-  --header-h: 56px;
+:root{
+  --bg:#f5f4f0;--surface:#fff;--surface2:#f0ede8;
+  --accent:#1a1a2e;--accent2:#e63946;
+  --text:#1a1a2e;--text2:#6b6b6b;--border:#ddd9d2;
+  --green:#2d6a4f;--green-bg:#e8f5ee;
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--text)}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh}
-
-/* Header */
-header{height:var(--header-h);background:var(--accent);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0}
+header{height:56px;background:var(--accent);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0}
 .logo{width:32px;height:32px;background:var(--accent2);border-radius:8px;display:flex;align-items:center;justify-content:center}
-.logo svg{width:18px;height:18px;fill:white}
-header h1{font-size:16px;font-weight:700;color:white;letter-spacing:0.03em}
-.version{margin-left:auto;font-size:11px;color:rgba(255,255,255,0.4);font-family:'DM Mono',monospace}
-
-/* Content */
+header h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:.03em}
+.version{margin-left:auto;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
 #content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-
-/* Tab bar */
-nav{height:var(--tab-h);background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0;position:relative}
-.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;color:var(--text2);border:none;background:none;cursor:pointer;padding:6px 2px;transition:color 0.15s;font-family:inherit}
+nav{height:56px;background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0;position:relative}
+.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;color:var(--text2);border:none;background:none;cursor:pointer;padding:6px 2px;font-family:inherit}
 .tab-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tab-btn.active{color:var(--accent2)}
-.tab-indicator{position:absolute;top:0;height:2px;background:var(--accent2);transition:left 0.25s cubic-bezier(.4,0,.2,1),width 0.25s cubic-bezier(.4,0,.2,1)}
-
-/* Sections */
-.section{display:none;padding:16px}
-.section.active{display:block}
-
-/* Cards */
+.tab-indicator{position:absolute;top:0;height:2px;background:var(--accent2);transition:left .25s cubic-bezier(.4,0,.2,1),width .25s cubic-bezier(.4,0,.2,1)}
+.section{display:none;padding:16px}.section.active{display:block}
 .card{background:var(--surface);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
-.card-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:4px}
+.card-title{font-size:13px;font-weight:700;margin-bottom:4px}
 .card-sub{font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:10px}
 .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-bottom:8px;font-weight:500}
-.badge-red{background:#fde;color:var(--accent2)}
-.badge-blue{background:#e8f0fe;color:#1a56db}
+.badge-red{background:#fde;color:var(--accent2)}.badge-blue{background:#e8f0fe;color:#1a56db}
 .spec-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--border)}
 .spec-label{font-size:11px;color:var(--text2)}
 .spec-val{font-size:12px;font-weight:500;font-family:'DM Mono',monospace}
-
-/* Product grid */
 .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-
-/* Table */
 .tbl-scroll{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:16px}
 table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}
-th{background:var(--accent);color:white;padding:8px 10px;text-align:center;font-weight:500;font-size:11px}
-td{padding:7px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border);color:var(--text)}
-td:last-child{border-right:none}
-tr:last-child td{border-bottom:none}
+th{background:var(--accent);color:#fff;padding:8px 10px;text-align:center;font-weight:500;font-size:11px}
+td{padding:7px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+td:last-child{border-right:none}tr:last-child td{border-bottom:none}
 .row-h{background:var(--surface2);font-weight:500;text-align:left;color:var(--text2);font-size:11px}
-td.hit{background:var(--highlight);font-weight:700;color:#7c4a00;outline:2px solid var(--highlight-border);outline-offset:-2px}
 .na{color:#ccc}
-.section-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:0.08em;text-transform:uppercase;margin:20px 0 10px}
-.section-label:first-child{margin-top:0}
-
-/* Calc */
-.calc-group{margin-bottom:16px}
-.calc-label{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:0.06em;margin-bottom:6px}
-.input-row{display:flex;gap:8px;align-items:center}
-.input-row label{font-size:12px;color:var(--text2);min-width:28px}
-input[type=number],select{height:42px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:15px;font-family:inherit;padding:0 12px;width:100%;outline:none;transition:border-color 0.15s}
-input[type=number]:focus,select:focus{border-color:var(--accent2)}
-.w-half{width:50%}
-.result-box{background:var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;text-align:center}
-.result-label{font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:6px}
-.result-price{font-size:32px;font-weight:700;color:white;font-family:'DM Mono',monospace;letter-spacing:-0.02em}
-.result-hint{font-size:11px;color:rgba(255,255,255,0.5);margin-top:6px;line-height:1.5}
-.result-box.error{background:#c0392b}
-.result-box.na{background:#888}
-
-/* Tip box */
+.sec-lbl{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.08em;margin:20px 0 10px}
+.sec-lbl:first-child{margin-top:0}
 .tip{background:#fffbe6;border:1px solid #f0c040;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12px;line-height:1.6;color:#7c5800}
+.clbl{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.06em;margin-bottom:6px}
+.cgrp{margin-bottom:14px}
+input[type=number],select{height:42px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:15px;font-family:inherit;padding:0 12px;width:100%;outline:none}
+input[type=number]:focus,select:focus{border-color:var(--accent2)}
+.irow{display:flex;gap:8px}.irow>div{flex:1}
+.rbox{background:var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;text-align:center}
+.rbox .rl{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:6px}
+.rbox .rp{font-size:32px;font-weight:700;color:#fff;font-family:'DM Mono',monospace}
+.rbox .rh{font-size:11px;color:rgba(255,255,255,.5);margin-top:6px;line-height:1.5}
+.rbox.err{background:#c0392b}
 
-/* Spec table */
-.spec-tbl-wrap{border-radius:10px;border:1px solid var(--border);overflow:hidden;margin-bottom:16px}
-.spec-tbl-wrap table td{font-size:11px;text-align:left}
-.spec-tbl-wrap table th{text-align:left}
+/* Estimate */
+.esec{background:var(--surface);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
+.esec-title{font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.esec-title .num{background:var(--accent);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.esec-note{font-size:12px;color:var(--text2);margin-top:8px;line-height:1.6}
+.esec-note strong{font-family:'DM Mono',monospace;color:var(--text)}
+.bdown{background:var(--surface2);border-radius:10px;padding:12px;margin-top:4px}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px}
+.brow+.brow{border-top:1px solid var(--border)}
+.brow .lbl{color:var(--text2)}.brow .amt{font-family:'DM Mono',monospace;font-weight:500}
+.btotal{display:flex;justify-content:space-between;align-items:center;padding:10px 0 0;margin-top:6px;border-top:2px solid var(--accent);font-weight:700;font-size:15px}
+.btotal .amt{font-family:'DM Mono',monospace;color:var(--accent2)}
+.total-card{background:var(--accent);border-radius:12px;padding:20px;text-align:center;margin-top:12px}
+.total-card .lbl{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:6px}
+.total-card .price{font-size:36px;font-weight:700;color:#fff;font-family:'DM Mono',monospace}
+.total-card .sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px}
+.note-green{background:var(--green-bg);border:1px solid #a8d5be;border-radius:10px;padding:10px 12px;font-size:11px;color:var(--green);line-height:1.6;margin-top:12px}
 </style>
 </head>
 <body>
 <div id="app">
   <header>
     <div class="logo">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" fill="none" stroke="white" stroke-width="2"/><line x1="3" y1="9" x2="21" y2="9" stroke="white" stroke-width="2"/><line x1="9" y1="9" x2="9" y2="21" stroke="white" stroke-width="2"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
     </div>
     <h1>ガラス価格表</h1>
-    <span class="version">FL v1.0</span>
+    <span class="version">v2.0</span>
   </header>
 
   <div id="content">
@@ -118,232 +96,253 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
     <div id="s-products" class="section active">
       <div class="tip">一般住宅の窓には「3mm」と「5mm」が最多使用。修理の際は必ず厚みを計ってください。</div>
       <div class="product-grid">
-        <div class="card">
-          <div class="badge badge-red">住宅向け</div>
-          <div class="card-title">2mm透明（FL2）</div>
-          <div class="card-sub">内部の木製建具向け</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">1,219mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">813mm</span></div>
-        </div>
-        <div class="card">
-          <div class="badge badge-blue">最多使用</div>
-          <div class="card-title">3mm透明（FL3）</div>
-          <div class="card-sub">一般住宅の窓に最多</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">2,540mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">1,905mm</span></div>
-        </div>
-        <div class="card">
-          <div class="badge badge-blue">最多使用</div>
-          <div class="card-title">5mm透明（FL5）</div>
-          <div class="card-sub">住宅窓の標準厚み</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">3,810mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,540mm</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">6mm透明（FL6）</div>
-          <div class="card-sub">強度が必要な用途向け</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">3,810mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,540mm</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">8mm透明（FL8）</div>
-          <div class="card-sub">高強度用途向け</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">7,420mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">10mm透明（FL10）</div>
-          <div class="card-sub">特殊用途向け</div>
-          <div class="spec-row"><span class="spec-label">最大寸法</span><span class="spec-val">要問合せ</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">12mm透明（FL12）</div>
-          <div class="card-sub">重厚な用途向け</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">8,690mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div>
-        </div>
-        <div class="card">
-          <div class="card-title">15 / 19mm透明</div>
-          <div class="card-sub">超厚・特殊用途向け</div>
-          <div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">9,960mm</span></div>
-          <div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div>
-        </div>
+        <div class="card"><div class="badge badge-red">住宅向け</div><div class="card-title">2mm透明（FL2）</div><div class="card-sub">内部の木製建具向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">1,219mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">813mm</span></div></div>
+        <div class="card"><div class="badge badge-blue">最多使用</div><div class="card-title">3mm透明（FL3）</div><div class="card-sub">一般住宅の窓に最多</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">2,540mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">1,905mm</span></div></div>
+        <div class="card"><div class="badge badge-blue">最多使用</div><div class="card-title">5mm透明（FL5）</div><div class="card-sub">住宅窓の標準厚み</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">3,810mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,540mm</span></div></div>
+        <div class="card"><div class="card-title">6mm透明（FL6）</div><div class="card-sub">強度が必要な用途向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">3,810mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,540mm</span></div></div>
+        <div class="card"><div class="card-title">8mm透明（FL8）</div><div class="card-sub">高強度用途向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">7,420mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div></div>
+        <div class="card"><div class="card-title">12mm透明（FL12）</div><div class="card-sub">重厚な用途向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">8,690mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div></div>
       </div>
     </div>
 
     <!-- 在庫価格表 -->
     <div id="s-stock" class="section">
-      <p style="font-size:11px;color:var(--text2);margin-bottom:12px">発注先：日本板硝子　単位：円（税別）<br>列=W寸法・行=H寸法（値以下の範囲）</p>
-      <div class="section-label">3mm透明（FL3）</div>
-      <div class="tbl-scroll" id="tbl-fl3"></div>
-      <div class="section-label">2mm透明（FL2）</div>
-      <div class="tbl-scroll" id="tbl-fl2"></div>
-      <div class="section-label">5mm透明（FL5）</div>
-      <div class="tbl-scroll" id="tbl-fl5"></div>
+      <p style="font-size:11px;color:var(--text2);margin-bottom:12px">発注先：日本板硝子　単位：円（税別）／列=W・行=H（値以下の範囲）</p>
+      <div class="sec-lbl">3mm透明（FL3）</div><div class="tbl-scroll" id="tbl-fl3"></div>
+      <div class="sec-lbl">2mm透明（FL2）</div><div class="tbl-scroll" id="tbl-fl2"></div>
+      <div class="sec-lbl">5mm透明（FL5）</div><div class="tbl-scroll" id="tbl-fl5"></div>
     </div>
 
     <!-- 仕入れ価格表 -->
     <div id="s-order" class="section">
       <p style="font-size:11px;color:var(--text2);margin-bottom:12px">発注先：日本板硝子　単位：円/㎡（税別）</p>
-      <div class="tbl-scroll">
-        <table>
-          <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th><th>〜7.013㎡</th></tr>
-          <tr><td class="row-h">3mm（FL3）</td><td>5,300</td><td>4,100</td><td>4,100</td><td class="na">—</td></tr>
-          <tr><td class="row-h">5mm（FL5）</td><td>7,500</td><td>5,800</td><td>5,800</td><td>7,600</td></tr>
-          <tr><td class="row-h">6mm（FL6）</td><td>9,700</td><td>7,500</td><td>7,500</td><td>9,900</td></tr>
-          <tr><td class="row-h">8mm（FL8）</td><td>15,500</td><td>11,900</td><td>13,100</td><td>13,100</td></tr>
-        </table>
-      </div>
+      <div class="tbl-scroll"><table>
+        <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th><th>〜7.013㎡</th></tr>
+        <tr><td class="row-h">3mm（FL3）</td><td>5,300</td><td>4,100</td><td>4,100</td><td class="na">—</td></tr>
+        <tr><td class="row-h">5mm（FL5）</td><td>7,500</td><td>5,800</td><td>5,800</td><td>7,600</td></tr>
+        <tr><td class="row-h">6mm（FL6）</td><td>9,700</td><td>7,500</td><td>7,500</td><td>9,900</td></tr>
+        <tr><td class="row-h">8mm（FL8）</td><td>15,500</td><td>11,900</td><td>13,100</td><td>13,100</td></tr>
+      </table></div>
     </div>
 
-    <!-- 価格検索 -->
-    <div id="s-calc" class="section">
-      <!-- 在庫ガラス -->
-      <div class="card">
-        <div class="card-title" style="margin-bottom:14px">在庫ガラス（尺寸出し）</div>
-        <div class="calc-group">
-          <div class="calc-label">品種</div>
-          <select id="c-type" onchange="calcStock()">
+    <!-- 見積もり -->
+    <div id="s-estimate" class="section">
+      <div class="tip">【単板ガラス修理】お客様宅へ伺う場合の見積もり計算機</div>
+
+      <div class="esec">
+        <div class="esec-title"><span class="num">①</span>ガラス代（在庫・尺寸出し）</div>
+        <div class="cgrp">
+          <div class="clbl">品種</div>
+          <select id="e-type" onchange="calcEst()">
             <option value="fl3">3mm透明（FL3）</option>
             <option value="fl2">2mm透明（FL2）</option>
             <option value="fl5">5mm透明（FL5）</option>
           </select>
         </div>
-        <div class="calc-group">
-          <div class="input-row">
-            <div style="flex:1">
-              <div class="calc-label">W（幅）mm</div>
-              <input type="number" id="c-w" value="800" min="1" inputmode="numeric" oninput="calcStock()">
-            </div>
-            <div style="flex:1">
-              <div class="calc-label">H（高さ）mm</div>
-              <input type="number" id="c-h" value="800" min="1" inputmode="numeric" oninput="calcStock()">
-            </div>
+        <div class="cgrp">
+          <div class="irow">
+            <div><div class="clbl">W（幅）mm</div><input type="number" id="e-w" value="800" min="1" inputmode="numeric" oninput="calcEst()"></div>
+            <div><div class="clbl">H（高さ）mm</div><input type="number" id="e-h" value="800" min="1" inputmode="numeric" oninput="calcEst()"></div>
           </div>
         </div>
-        <div class="result-box" id="stock-result-box">
-          <div class="result-label">価格（税別）</div>
-          <div class="result-price" id="stock-price">—</div>
-          <div class="result-hint" id="stock-hint"></div>
-        </div>
+        <div class="esec-note">適用範囲：<span id="e-glass-range">—</span>　→　<strong id="e-glass-price">—</strong></div>
       </div>
 
-      <!-- 仕入れガラス -->
+      <div class="esec">
+        <div class="esec-title"><span class="num">②</span>出張・施工費</div>
+        <div class="cgrp">
+          <div class="irow">
+            <div><div class="clbl">片道（分）</div><input type="number" id="e-travel" value="20" min="1" max="90" inputmode="numeric" oninput="calcEst()"></div>
+            <div><div class="clbl">施工時間（分）</div><input type="number" id="e-work" value="30" min="1" inputmode="numeric" oninput="calcEst()"></div>
+          </div>
+        </div>
+        <div class="esec-note">出張費：<strong id="e-travel-price">—</strong>　／　施工費：<strong id="e-work-price">—</strong></div>
+      </div>
+
+      <div class="esec">
+        <div class="esec-title"><span class="num">③</span>廃材搬出・処分費</div>
+        <div class="cgrp">
+          <div class="clbl">枚数</div>
+          <input type="number" id="e-waste" value="1" min="1" max="20" inputmode="numeric" oninput="calcEst()">
+        </div>
+        <div class="esec-note">処分費：<strong id="e-waste-price">—</strong>　<span>（3枚まで500円、4枚目から+100円/枚）</span></div>
+      </div>
+
+      <div class="bdown">
+        <div class="brow"><span class="lbl">①ガラス代</span><span class="amt" id="b-glass">—</span></div>
+        <div class="brow"><span class="lbl">②出張費</span><span class="amt" id="b-travel">—</span></div>
+        <div class="brow"><span class="lbl">②施工費</span><span class="amt" id="b-work">—</span></div>
+        <div class="brow"><span class="lbl">③廃材処分費</span><span class="amt" id="b-waste">—</span></div>
+        <div class="brow"><span class="lbl">④諸経費（5%・最低2,000円）</span><span class="amt" id="b-misc">—</span></div>
+        <div class="btotal"><span>合計（税別）</span><span class="amt" id="b-total">—</span></div>
+      </div>
+
+      <div class="total-card">
+        <div class="lbl">お見積り金額（税別）</div>
+        <div class="price" id="e-total">—</div>
+        <div class="sub" id="e-tax">税込：—</div>
+      </div>
+
+      <div class="note-green">※施工時間が2時間を超える場合は日分割計算で算出してください。<br>（例）2時間半かかる場合 → ¥12,000〜</div>
+    </div>
+
+    <!-- 価格検索 -->
+    <div id="s-calc" class="section">
+      <div class="card">
+        <div class="card-title" style="margin-bottom:14px">在庫ガラス（尺寸出し）</div>
+        <div class="cgrp"><div class="clbl">品種</div><select id="c-type" onchange="calcStock()"><option value="fl3">3mm透明（FL3）</option><option value="fl2">2mm透明（FL2）</option><option value="fl5">5mm透明（FL5）</option></select></div>
+        <div class="cgrp"><div class="irow"><div><div class="clbl">W（幅）mm</div><input type="number" id="c-w" value="800" min="1" inputmode="numeric" oninput="calcStock()"></div><div><div class="clbl">H（高さ）mm</div><input type="number" id="c-h" value="800" min="1" inputmode="numeric" oninput="calcStock()"></div></div></div>
+        <div class="rbox" id="srbox"><div class="rl">価格（税別）</div><div class="rp" id="sprice">—</div><div class="rh" id="shint"></div></div>
+      </div>
       <div class="card">
         <div class="card-title" style="margin-bottom:14px">仕入れガラス（㎡出し）</div>
-        <div class="calc-group">
-          <div class="calc-label">品種</div>
-          <select id="o-type" onchange="calcOrder()">
-            <option value="fl3">3mm透明（FL3）</option>
-            <option value="fl5">5mm透明（FL5）</option>
-            <option value="fl6">6mm透明（FL6）</option>
-            <option value="fl8">8mm透明（FL8）</option>
-          </select>
-        </div>
-        <div class="calc-group">
-          <div class="calc-label">面積（㎡）</div>
-          <input type="number" id="o-area" value="0.5" min="0.001" step="0.001" inputmode="decimal" oninput="calcOrder()">
-        </div>
-        <div class="result-box" id="order-result-box">
-          <div class="result-label">単価 / 合計（税別）</div>
-          <div class="result-price" id="order-price">—</div>
-          <div class="result-hint" id="order-hint"></div>
-        </div>
+        <div class="cgrp"><div class="clbl">品種</div><select id="o-type" onchange="calcOrder()"><option value="fl3">3mm透明（FL3）</option><option value="fl5">5mm透明（FL5）</option><option value="fl6">6mm透明（FL6）</option><option value="fl8">8mm透明（FL8）</option></select></div>
+        <div class="cgrp"><div class="clbl">面積（㎡）</div><input type="number" id="o-area" value="0.5" min="0.001" step="0.001" inputmode="decimal" oninput="calcOrder()"></div>
+        <div class="rbox" id="orbox"><div class="rl">単価 / 合計（税別）</div><div class="rp" id="oprice">—</div><div class="rh" id="ohint"></div></div>
       </div>
     </div>
 
   </div><!-- /content -->
 
-  <nav id="nav">
+  <nav>
     <div class="tab-indicator" id="indicator"></div>
-    <button class="tab-btn active" onclick="switchTab('products',0)" data-tab="products">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
-      製品一覧
+    <button class="tab-btn active" onclick="switchTab('products',0)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>製品一覧
     </button>
-    <button class="tab-btn" onclick="switchTab('stock',1)" data-tab="stock">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>
-      在庫価格
+    <button class="tab-btn" onclick="switchTab('stock',1)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>在庫価格
     </button>
-    <button class="tab-btn" onclick="switchTab('order',2)" data-tab="order">
-      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>
-      仕入価格
+    <button class="tab-btn" onclick="switchTab('order',2)">
+      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>仕入価格
     </button>
-    <button class="tab-btn" onclick="switchTab('calc',3)" data-tab="calc">
-      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/><line x1="8" y1="6" x2="16" y2="6"/></svg>
-      価格検索
+    <button class="tab-btn" onclick="switchTab('estimate',3)">
+      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>見積もり
+    </button>
+    <button class="tab-btn" onclick="switchTab('calc',4)">
+      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>価格検索
     </button>
   </nav>
 </div>
 
 <script>
-const stockData = {
+const stockData={
   fl3:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[1300,1300,1400,1800,2700],[1300,1300,2000,2700,4100],[1400,2000,4100,5400,8100],[1800,2700,5400,7200,10800],[2700,4100,8100,10800,16300]]},
   fl2:{cols:[303,455,813],rows:[303,455,914],prices:[[1500,1500,1500],[1500,1500,1500],[1500,1500,2900]]},
   fl5:{cols:[303,455,914,1219,1829,2134,2438],rows:[303,455,914,1219,1829,2134,2438],prices:[[1800,1800,1900,2600,3800,4400,5100],[1800,1800,2900,3800,5700,6700,7600],[1900,2900,5700,7700,11500,13400,15300],[2600,3800,7700,10200,15300,17900,20400],[3800,5700,11500,15300,23000,26800,30600],[4400,6700,13400,17900,26800,null,null],[5100,7600,15300,20400,30600,null,null]]}
 };
-const orderData = {
+const orderData={
   fl3:[[0.2,5300],[2.275,4100],[4.598,4100],[9999,null]],
   fl5:[[0.2,7500],[2.275,5800],[4.598,5800],[7.013,7600],[9999,null]],
   fl6:[[0.2,9700],[2.275,7500],[4.598,7500],[7.013,9900],[9999,null]],
   fl8:[[0.2,15500],[2.275,11900],[4.598,13100],[7.013,13100],[9999,null]]
 };
 
-function buildTable(key) {
-  const d = stockData[key];
-  let h = '<table><tr><th>H＼W</th>';
-  d.cols.forEach(c=>{ h+=`<th>〜${c}</th>`; });
-  h+='</tr>';
-  d.rows.forEach((r,ri)=>{
-    h+=`<tr><td class="row-h">〜${r}</td>`;
-    d.cols.forEach((c,ci)=>{
-      const p=d.prices[ri][ci];
-      h+=p!=null?`<td>${p.toLocaleString()}</td>`:`<td class="na">—</td>`;
-    });
-    h+='</tr>';
-  });
-  h+='</table>';
-  return h;
-}
-document.getElementById('tbl-fl3').innerHTML = buildTable('fl3');
-document.getElementById('tbl-fl2').innerHTML = buildTable('fl2');
-document.getElementById('tbl-fl5').innerHTML = buildTable('fl5');
+// 出張費テーブル（片道分数→金額）
+const travelTbl=[
+  [5,1000],[10,2000],[15,2000],[20,2000],[25,4000],
+  [30,4000],[35,4000],[40,6000],[45,6000],[50,6000],
+  [55,8000],[60,8000],[65,10000],[70,10000],[75,10000],
+  [80,10000],[85,12000],[90,12000]
+];
+// 施工費テーブル・単板（施工分数→金額）
+const workTbl=[
+  [15,2000],[30,2000],[45,3000],[60,4000],
+  [75,5000],[95,6000],[110,7000],[120,8000]
+];
 
+function lookup(tbl,val){
+  for(let i=0;i<tbl.length;i++) if(val<=tbl[i][0]) return tbl[i][1];
+  return null;
+}
 function findIdx(arr,val){for(let i=0;i<arr.length;i++)if(val<=arr[i])return i;return -1;}
+function fmt(n){return n!=null?'¥'+n.toLocaleString():'—';}
+
+function getGlass(type,w,h){
+  const d=stockData[type];
+  const ci=findIdx(d.cols,w),ri=findIdx(d.rows,h);
+  if(ci<0||ri<0) return{price:null,range:'範囲外'};
+  const p=d.prices[ri][ci];
+  if(p==null) return{price:null,range:'該当なし'};
+  const wl=ci===0?`W≤${d.cols[0]}`:`W${d.cols[ci-1]+1}〜${d.cols[ci]}`;
+  const hl=ri===0?`H≤${d.rows[0]}`:`H${d.rows[ri-1]+1}〜${d.rows[ri]}`;
+  return{price:p,range:`${wl}mm / ${hl}mm`};
+}
+
+function calcEst(){
+  const type=document.getElementById('e-type').value;
+  const w=parseInt(document.getElementById('e-w').value)||0;
+  const h=parseInt(document.getElementById('e-h').value)||0;
+  const tMin=parseInt(document.getElementById('e-travel').value)||0;
+  const wMin=parseInt(document.getElementById('e-work').value)||0;
+  const waste=parseInt(document.getElementById('e-waste').value)||1;
+
+  const g=getGlass(type,w,h);
+  document.getElementById('e-glass-range').textContent=g.range;
+  document.getElementById('e-glass-price').textContent=fmt(g.price);
+
+  const tp=lookup(travelTbl,tMin);
+  const wp=lookup(workTbl,wMin);
+  document.getElementById('e-travel-price').textContent=fmt(tp);
+  document.getElementById('e-work-price').textContent=fmt(wp);
+
+  const wasteP=waste<=3?500:500+(waste-3)*100;
+  document.getElementById('e-waste-price').textContent=fmt(wasteP);
+
+  if(g.price==null||tp==null||wp==null){
+    ['b-glass','b-travel','b-work','b-waste','b-misc','b-total'].forEach(id=>document.getElementById(id).textContent='—');
+    document.getElementById('e-total').textContent='計算不可';
+    document.getElementById('e-tax').textContent='入力値を確認してください';
+    return;
+  }
+  const sub=g.price+tp+wp+wasteP;
+  const misc=Math.max(2000,Math.round(sub*0.05));
+  const total=sub+misc;
+  document.getElementById('b-glass').textContent=fmt(g.price);
+  document.getElementById('b-travel').textContent=fmt(tp);
+  document.getElementById('b-work').textContent=fmt(wp);
+  document.getElementById('b-waste').textContent=fmt(wasteP);
+  document.getElementById('b-misc').textContent=fmt(misc);
+  document.getElementById('b-total').textContent=fmt(total);
+  document.getElementById('e-total').textContent=fmt(total);
+  document.getElementById('e-tax').textContent='税込：'+fmt(Math.round(total*1.1));
+}
 
 function calcStock(){
-  const type=document.getElementById('c-type').value;
-  const d=stockData[type];
-  const w=parseInt(document.getElementById('c-w').value)||0;
-  const h=parseInt(document.getElementById('c-h').value)||0;
-  const ci=findIdx(d.cols,w), ri=findIdx(d.rows,h);
-  const box=document.getElementById('stock-result-box');
-  const priceEl=document.getElementById('stock-price');
-  const hintEl=document.getElementById('stock-hint');
-  box.className='result-box';
-  if(ci<0||ri<0){box.classList.add('error');priceEl.textContent='範囲外';hintEl.textContent='サイズが対応範囲を超えています';return;}
-  const p=d.prices[ri][ci];
-  if(p==null){box.classList.add('na');priceEl.textContent='該当なし';hintEl.textContent='';return;}
-  const wLabel=ci===0?`W ≤ ${d.cols[0]}`:`W ${d.cols[ci-1]+1}〜${d.cols[ci]}`;
-  const hLabel=ri===0?`H ≤ ${d.rows[0]}`:`H ${d.rows[ri-1]+1}〜${d.rows[ri]}`;
-  priceEl.textContent='¥'+p.toLocaleString();
-  hintEl.textContent=`適用範囲：${wLabel}mm / ${hLabel}mm`;
+  const g=getGlass(document.getElementById('c-type').value,parseInt(document.getElementById('c-w').value)||0,parseInt(document.getElementById('c-h').value)||0);
+  const box=document.getElementById('srbox');
+  box.className='rbox';
+  if(g.price==null){box.classList.add('err');document.getElementById('sprice').textContent='範囲外';document.getElementById('shint').textContent=g.range;return;}
+  document.getElementById('sprice').textContent=fmt(g.price);
+  document.getElementById('shint').textContent='適用範囲：'+g.range;
 }
 
 function calcOrder(){
-  const type=document.getElementById('o-type').value;
   const area=parseFloat(document.getElementById('o-area').value)||0;
-  const d=orderData[type];
+  const d=orderData[document.getElementById('o-type').value];
   let unit=null;
-  for(const [max,price] of d){if(area<=max){unit=price;break;}}
-  const box=document.getElementById('order-result-box');
-  const priceEl=document.getElementById('order-price');
-  const hintEl=document.getElementById('order-hint');
-  box.className='result-box';
-  if(!unit){box.classList.add('error');priceEl.textContent='範囲外';hintEl.textContent='面積が対応範囲を超えています';return;}
-  const total=Math.round(unit*area);
-  priceEl.textContent='¥'+unit.toLocaleString()+'/㎡';
-  hintEl.textContent='合計 ¥'+total.toLocaleString();
+  for(const [max,p] of d){if(area<=max){unit=p;break;}}
+  const box=document.getElementById('orbox');
+  box.className='rbox';
+  if(!unit){box.classList.add('err');document.getElementById('oprice').textContent='範囲外';document.getElementById('ohint').textContent='';return;}
+  document.getElementById('oprice').textContent=fmt(unit)+'/㎡';
+  document.getElementById('ohint').textContent='合計 '+fmt(Math.round(unit*area));
 }
+
+function buildTable(key){
+  const d=stockData[key];
+  let h='<table><tr><th>H＼W</th>';
+  d.cols.forEach(c=>{h+=`<th>〜${c}</th>`;});
+  h+='</tr>';
+  d.rows.forEach((r,ri)=>{
+    h+=`<tr><td class="row-h">〜${r}</td>`;
+    d.cols.forEach((c,ci)=>{const p=d.prices[ri][ci];h+=p!=null?`<td>${p.toLocaleString()}</td>`:`<td class="na">—</td>`;});
+    h+='</tr>';
+  });
+  return h+'</table>';
+}
+document.getElementById('tbl-fl3').innerHTML=buildTable('fl3');
+document.getElementById('tbl-fl2').innerHTML=buildTable('fl2');
+document.getElementById('tbl-fl5').innerHTML=buildTable('fl5');
 
 function switchTab(name,idx){
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
@@ -353,20 +352,15 @@ function switchTab(name,idx){
   document.getElementById('content').scrollTop=0;
   updateIndicator(idx);
 }
-
 function updateIndicator(idx){
-  const btns=document.querySelectorAll('.tab-btn');
+  const n=document.querySelectorAll('.tab-btn').length;
   const ind=document.getElementById('indicator');
-  const w=100/btns.length;
-  ind.style.width=w+'%';
-  ind.style.left=(w*idx)+'%';
+  ind.style.width=(100/n)+'%';
+  ind.style.left=(100/n*idx)+'%';
 }
 
-calcStock(); calcOrder(); updateIndicator(0);
-
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('sw.js').catch(()=>{});
-}
+calcEst();calcStock();calcOrder();updateIndicator(0);
+if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
 </html>
