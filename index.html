@@ -20,123 +20,435 @@
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;overflow:hidden;background:var(--bg);font-family:'Noto Sans JP',sans-serif;color:var(--text)}
 #app{display:flex;flex-direction:column;height:100%;height:100dvh}
-header{height:56px;background:var(--accent);display:flex;align-items:center;padding:0 16px;gap:12px;flex-shrink:0}
-.logo{width:32px;height:32px;background:var(--accent2);border-radius:8px;display:flex;align-items:center;justify-content:center}
-header h1{font-size:16px;font-weight:700;color:#fff;letter-spacing:.03em}
-.version{margin-left:auto;font-size:11px;color:rgba(255,255,255,.4);font-family:'DM Mono',monospace}
-#content{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
-nav{height:56px;background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0;position:relative}
-.tab-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:9px;color:var(--text2);border:none;background:none;cursor:pointer;padding:6px 2px;font-family:inherit}
-.tab-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tab-btn.active{color:var(--accent2)}
-.tab-indicator{position:absolute;top:0;height:2px;background:var(--accent2);transition:left .25s cubic-bezier(.4,0,.2,1),width .25s cubic-bezier(.4,0,.2,1)}
-.section{display:none;padding:16px}.section.active{display:block}
-.card{background:var(--surface);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
-.card-title{font-size:13px;font-weight:700;margin-bottom:4px}
-.card-sub{font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:10px}
-.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-bottom:8px;font-weight:500}
-.badge-red{background:#fde;color:var(--accent2)}.badge-blue{background:#e8f0fe;color:#1a56db}
-.spec-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--border)}
+
+/* Header */
+header{height:52px;background:var(--accent);display:flex;align-items:center;padding:0 16px;gap:10px;flex-shrink:0}
+.logo{width:28px;height:28px;background:var(--accent2);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.logo svg{width:16px;height:16px}
+header h1{font-size:15px;font-weight:700;color:#fff;letter-spacing:.03em}
+.version{margin-left:auto;font-size:10px;color:rgba(255,255,255,.35);font-family:'DM Mono',monospace}
+
+/* Main tab bar (bottom) */
+#content{flex:1;overflow:hidden;display:flex;flex-direction:column}
+nav.main-nav{height:54px;background:var(--surface);border-top:1px solid var(--border);display:flex;flex-shrink:0;position:relative}
+.mnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:9px;color:var(--text2);border:none;background:none;cursor:pointer;padding:5px 2px;font-family:inherit}
+.mnav-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.mnav-btn.active{color:var(--accent2)}
+.main-indicator{position:absolute;top:0;height:2px;background:var(--accent2);transition:left .25s cubic-bezier(.4,0,.2,1),width .25s cubic-bezier(.4,0,.2,1)}
+
+/* Pages */
+.page{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.page.active{display:block}
+.page-inner{padding:14px}
+
+/* Category sub-tabs */
+.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:0 14px 12px;flex-shrink:0;-webkit-overflow-scrolling:touch}
+.cat-tabs::-webkit-scrollbar{display:none}
+.cat-btn{white-space:nowrap;padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer;flex-shrink:0}
+.cat-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cat-content{display:none;padding:0 14px 14px}
+.cat-content.active{display:block}
+
+/* Cards */
+.card{background:var(--surface);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
+.card-title{font-size:13px;font-weight:700;margin-bottom:3px}
+.card-sub{font-size:11px;color:var(--text2);line-height:1.5;margin-bottom:8px}
+.badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;margin-bottom:6px;font-weight:500}
+.badge-red{background:#fde;color:var(--accent2)}
+.badge-blue{background:#e8f0fe;color:#1a56db}
+.badge-green{background:#e8f5ee;color:#2d6a4f}
+.badge-orange{background:#fff0e0;color:#b35c00}
+.badge-purple{background:#f0e8fe;color:#6b21a8}
+.spec-row{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-top:1px solid var(--border)}
 .spec-label{font-size:11px;color:var(--text2)}
-.spec-val{font-size:12px;font-weight:500;font-family:'DM Mono',monospace}
-.product-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.tbl-scroll{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:16px}
-table{border-collapse:collapse;width:100%;font-size:12px;white-space:nowrap}
-th{background:var(--accent);color:#fff;padding:8px 10px;text-align:center;font-weight:500;font-size:11px}
-td{padding:7px 10px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
-td:last-child{border-right:none}tr:last-child td{border-bottom:none}
-.row-h{background:var(--surface2);font-weight:500;text-align:left;color:var(--text2);font-size:11px}
-.na{color:#ccc}
-.sec-lbl{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.08em;margin:20px 0 10px}
+.spec-val{font-size:11px;font-weight:500;font-family:'DM Mono',monospace}
+.tip-box{background:#fffbe6;border:1px solid #f0c040;border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;line-height:1.6;color:#7c5800}
+.warn-box{background:#fff0e0;border:1px solid #f0a040;border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;line-height:1.6;color:#7c3000}
+.note-green{background:var(--green-bg);border:1px solid #a8d5be;border-radius:10px;padding:10px 12px;font-size:11px;color:var(--green);line-height:1.6;margin-top:10px}
+.sec-lbl{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.08em;text-transform:uppercase;margin:14px 0 8px}
 .sec-lbl:first-child{margin-top:0}
-.tip{background:#fffbe6;border:1px solid #f0c040;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12px;line-height:1.6;color:#7c5800}
-.clbl{font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.06em;margin-bottom:6px}
-.cgrp{margin-bottom:14px}
-input[type=number],select{height:42px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:15px;font-family:inherit;padding:0 12px;width:100%;outline:none}
+
+/* Tables */
+.tbl-scroll{overflow-x:auto;border-radius:10px;border:1px solid var(--border);margin-bottom:12px}
+table{border-collapse:collapse;width:100%;font-size:11px;white-space:nowrap}
+th{background:var(--accent);color:#fff;padding:7px 9px;text-align:center;font-weight:500;font-size:10px}
+td{padding:6px 9px;text-align:center;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+td:last-child{border-right:none}tr:last-child td{border-bottom:none}
+.rh{background:var(--surface2);font-weight:500;text-align:left;color:var(--text2);font-size:10px}
+.na{color:#ccc}
+
+/* Estimate & Calc */
+.esec{background:var(--surface);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
+.esec-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:7px}
+.esec-title .num{background:var(--accent);color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+.clbl{font-size:10px;font-weight:700;color:var(--text2);letter-spacing:.06em;margin-bottom:5px}
+.cgrp{margin-bottom:12px}
+input[type=number],select{height:40px;border:1.5px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font-size:14px;font-family:inherit;padding:0 11px;width:100%;outline:none}
 input[type=number]:focus,select:focus{border-color:var(--accent2)}
 .irow{display:flex;gap:8px}.irow>div{flex:1}
-.rbox{background:var(--accent);border-radius:12px;padding:16px 20px;margin-top:12px;text-align:center}
-.rbox .rl{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:6px}
-.rbox .rp{font-size:32px;font-weight:700;color:#fff;font-family:'DM Mono',monospace}
-.rbox .rh{font-size:11px;color:rgba(255,255,255,.5);margin-top:6px;line-height:1.5}
-.rbox.err{background:#c0392b}
-
-/* Estimate */
-.esec{background:var(--surface);border-radius:12px;padding:16px;margin-bottom:12px;border:1px solid var(--border)}
-.esec-title{font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.06em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
-.esec-title .num{background:var(--accent);color:#fff;border-radius:50%;width:20px;height:20px;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
-.esec-note{font-size:12px;color:var(--text2);margin-top:8px;line-height:1.6}
+.esec-note{font-size:11px;color:var(--text2);margin-top:7px;line-height:1.6}
 .esec-note strong{font-family:'DM Mono',monospace;color:var(--text)}
-.bdown{background:var(--surface2);border-radius:10px;padding:12px;margin-top:4px}
-.brow{display:flex;justify-content:space-between;align-items:center;padding:6px 0;font-size:13px}
+.bdown{background:var(--surface2);border-radius:10px;padding:11px;margin-top:4px}
+.brow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;font-size:12px}
 .brow+.brow{border-top:1px solid var(--border)}
 .brow .lbl{color:var(--text2)}.brow .amt{font-family:'DM Mono',monospace;font-weight:500}
-.btotal{display:flex;justify-content:space-between;align-items:center;padding:10px 0 0;margin-top:6px;border-top:2px solid var(--accent);font-weight:700;font-size:15px}
+.btotal{display:flex;justify-content:space-between;align-items:center;padding:9px 0 0;margin-top:5px;border-top:2px solid var(--accent);font-weight:700;font-size:14px}
 .btotal .amt{font-family:'DM Mono',monospace;color:var(--accent2)}
-.total-card{background:var(--accent);border-radius:12px;padding:20px;text-align:center;margin-top:12px}
-.total-card .lbl{font-size:12px;color:rgba(255,255,255,.6);margin-bottom:6px}
-.total-card .price{font-size:36px;font-weight:700;color:#fff;font-family:'DM Mono',monospace}
-.total-card .sub{font-size:12px;color:rgba(255,255,255,.6);margin-top:6px}
-.note-green{background:var(--green-bg);border:1px solid #a8d5be;border-radius:10px;padding:10px 12px;font-size:11px;color:var(--green);line-height:1.6;margin-top:12px}
+.total-card{background:var(--accent);border-radius:12px;padding:18px;text-align:center;margin-top:10px}
+.total-card .lbl{font-size:11px;color:rgba(255,255,255,.6);margin-bottom:5px}
+.total-card .price{font-size:34px;font-weight:700;color:#fff;font-family:'DM Mono',monospace}
+.total-card .sub{font-size:11px;color:rgba(255,255,255,.55);margin-top:5px}
+.rbox{background:var(--accent);border-radius:12px;padding:14px 18px;margin-top:10px;text-align:center}
+.rbox .rl{font-size:10px;color:rgba(255,255,255,.6);margin-bottom:5px}
+.rbox .rp{font-size:28px;font-weight:700;color:#fff;font-family:'DM Mono',monospace}
+.rbox .rh{font-size:10px;color:rgba(255,255,255,.5);margin-top:5px;line-height:1.5}
+.rbox.err{background:#c0392b}
 </style>
 </head>
 <body>
 <div id="app">
-  <header>
-    <div class="logo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
-    </div>
-    <h1>ガラス価格表</h1>
-    <span class="version">v2.0</span>
-  </header>
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+  </div>
+  <h1>ガラス価格表</h1>
+  <span class="version">v3.0</span>
+</header>
 
-  <div id="content">
+<div id="content">
 
-    <!-- 製品一覧 -->
-    <div id="s-products" class="section active">
-      <div class="tip">一般住宅の窓には「3mm」と「5mm」が最多使用。修理の際は必ず厚みを計ってください。</div>
-      <div class="product-grid">
-        <div class="card"><div class="badge badge-red">住宅向け</div><div class="card-title">2mm透明（FL2）</div><div class="card-sub">内部の木製建具向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">1,219mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">813mm</span></div></div>
-        <div class="card"><div class="badge badge-blue">最多使用</div><div class="card-title">3mm透明（FL3）</div><div class="card-sub">一般住宅の窓に最多</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">2,540mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">1,905mm</span></div></div>
-        <div class="card"><div class="badge badge-blue">最多使用</div><div class="card-title">5mm透明（FL5）</div><div class="card-sub">住宅窓の標準厚み</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">3,810mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,540mm</span></div></div>
-        <div class="card"><div class="card-title">6mm透明（FL6）</div><div class="card-sub">強度が必要な用途向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">3,810mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,540mm</span></div></div>
-        <div class="card"><div class="card-title">8mm透明（FL8）</div><div class="card-sub">高強度用途向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">7,420mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div></div>
-        <div class="card"><div class="card-title">12mm透明（FL12）</div><div class="card-sub">重厚な用途向け</div><div class="spec-row"><span class="spec-label">最大W</span><span class="spec-val">8,690mm</span></div><div class="spec-row"><span class="spec-label">最大H</span><span class="spec-val">2,720mm</span></div></div>
+  <!-- ===== PAGE: 製品カタログ ===== -->
+  <div id="p-catalog" class="page active">
+    <div style="padding-top:12px">
+      <div class="cat-tabs" id="cat-tabs">
+        <button class="cat-btn active" onclick="showCat('tanban',this)">単板ガラス</button>
+        <button class="cat-btn" onclick="showCat('moso',this)">複層ガラス</button>
+        <button class="cat-btn" onclick="showCat('lowe',this)">Low-E複層</button>
+        <button class="cat-btn" onclick="showCat('kino',this)">機能・特殊</button>
+        <button class="cat-btn" onclick="showCat('kagami',this)">鏡</button>
+      </div>
+
+      <!-- 単板 -->
+      <div id="cat-tanban" class="cat-content active">
+        <div class="tip-box">修理の際は必ず厚みを計ってください。住宅窓は「3mm」「5mm」が最多使用です。</div>
+        <div class="card"><div class="badge badge-blue">最多使用</div><div class="card-title">フロートガラス 透明（FL）</div><div class="card-sub">いわゆる透明ガラス。溶かしたスズの上にガラス融液を浮かせて製造。</div><div class="spec-row"><span class="spec-label">主な厚み</span><span class="spec-val">2・3・5・6・8mm〜</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-orange">要確認</div><div class="card-title">型ガラス（F4A / F6A）</div><div class="card-sub">片側がデコボコ。風呂・トイレなど視線を遮りたい場所向け。デコボコ面は室内側に。2mm型は廃盤→ポリカ使用。</div><div class="spec-row"><span class="spec-label">主な厚み</span><span class="spec-val">4mm・6mm</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-orange">要確認</div><div class="card-title">摺ガラス（G3 / G5）</div><div class="card-sub">片側がザラザラ。水に濡れると透明度が増す。汚れが付着すると除去しにくいため水回りは型ガラス推奨。</div><div class="spec-row"><span class="spec-label">主な厚み</span><span class="spec-val">2・3・5mm</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="card-title">網入りガラス 透明（PW6.8）</div><div class="card-sub">防火・飛散防止性能あり。法規上義務付けられた箇所に使用。直射日光で熱割れに注意。</div><div class="spec-row"><span class="spec-label">厚み</span><span class="spec-val">6.8mm</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">AGC硝子建材</span></div></div>
+        <div class="card"><div class="card-title">網入りガラス 型（FW6.8）</div><div class="card-sub">網入り透明より安価。防火性能あり。透明より製造が簡単なため金額低め。</div><div class="spec-row"><span class="spec-label">厚み</span><span class="spec-val">6.8mm</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">AGC硝子建材</span></div></div>
+        <div class="card"><div class="badge badge-red">受注生産</div><div class="card-title">強化ガラス（PT4〜PT6 / FBT4）</div><div class="card-sub">普通ガラスの3〜5倍の強度。割れると粉々になり安全。防犯性能はなし。テーブル・棚板・台風対策に。</div><div class="spec-row"><span class="spec-label">主な厚み</span><span class="spec-val">4・5・6mm（型4mm）</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">AGC硝子建材</span></div></div>
+      </div>
+
+      <!-- 複層 -->
+      <div id="cat-moso" class="cat-content">
+        <div class="tip-box">複層ガラスは全て受注生産品です。納期がかかることを必ずお客様へお伝えください。</div>
+        <div class="card"><div class="badge badge-red">受注生産</div><div class="card-title">一般複層ガラス（ペアマルチ）</div><div class="card-sub">2枚のガラスの間に乾燥空気を封入。一枚ガラスの約2倍の断熱性能。片側だけの修理は不可。</div><div class="spec-row"><span class="spec-label">主な構成</span><span class="spec-val">3mm+A+3mm 他</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-red">受注生産</div><div class="card-title">真空ガラス（スペーシア）</div><div class="card-sub">フロートの約4倍・ペアマルチの約2倍の断熱性能。6.2mmの薄さで単板サッシへの入れ替え可能。結露抑制効果も。</div><div class="spec-row"><span class="spec-label">厚み</span><span class="spec-val">6.2mm</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+      </div>
+
+      <!-- Low-E -->
+      <div id="cat-lowe" class="cat-content">
+        <div class="tip-box">全て受注生産品です。「南面→日射取得型」「西面→日射遮蔽型」が基本の使い分けです。</div>
+        <div class="card"><div class="badge badge-green">断熱重視</div><div class="card-title">ペアマルチスーパー（日射取得型）</div><div class="card-sub">室内側Low-E膜。冬の暖房熱を室内へ反射。断熱性能は一枚ガラスの約3.3倍。冬場に活躍。</div><div class="spec-row"><span class="spec-label">主な構成</span><span class="spec-val">3mm透明+A+LowE3 他</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-orange">遮熱重視</div><div class="card-title">ペアマルチレイボーグ（日射遮蔽型）</div><div class="card-sub">室外側Low-E膜。日射熱を約60%カット。遮熱性能は一枚ガラスの約5倍。夏冬両対応。デメリット：冬の日差しも遮断。</div><div class="spec-row"><span class="spec-label">主な構成</span><span class="spec-val">LowE3+A+3mm透明 他</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-blue">大寸法対応</div><div class="card-title">ペアマルチEA（日射取得型）</div><div class="card-sub">オンライン工法で大量生産可能。12mm+12mmまで製作可能（スーパー/レイボーグは5mm+5mmが限界）。ビルサッシ向け。断熱性能は一枚の約3.1倍。</div><div class="spec-row"><span class="spec-label">主な構成</span><span class="spec-val">LowE3+A+3mm透明 他</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+      </div>
+
+      <!-- 機能・特殊 -->
+      <div id="cat-kino" class="cat-content">
+        <div class="card"><div class="badge badge-red">受注生産</div><div class="card-title">防犯ガラス（セキュオ）</div><div class="card-sub">中間膜やポリカで「こじ破り」「打ち破り」を防止。CP認定品。セキュオ30（安価）→60（標準・おすすめ）→SP（最強）の順。90は需要不明。</div><div class="spec-row"><span class="spec-label">種類</span><span class="spec-val">30mil / 60mil / 90mil / SP</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-red">受注生産</div><div class="card-title">合わせガラス（ラミペーン）</div><div class="card-sub">紫外線カット率99%以上・飛散防止性能。カラーラミペーンは5色展開。家具の色褪せ対策に最適。</div><div class="spec-row"><span class="spec-label">主な構成</span><span class="spec-val">3mm透明+中間膜+3mm透明 他</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+        <div class="card"><div class="badge badge-red">受注生産</div><div class="card-title">防音ガラス（ソノグラス）</div><div class="card-sub">防音特殊中間膜で音域全体をカバー。6.8mmで単板サッシ入れ替え可。内窓との組み合わせで更に効果大。</div><div class="spec-row"><span class="spec-label">主な構成</span><span class="spec-val">3mm透明+遮音膜30mil+3mm透明</span></div><div class="spec-row"><span class="spec-label">発注先</span><span class="spec-val">日本板硝子</span></div></div>
+      </div>
+
+      <!-- 鏡 -->
+      <div id="cat-kagami" class="cat-content">
+        <div class="tip-box">洗面所→TED（簡易防湿）、浴室→OC（防湿）が基本の使い分けです。曇らない鏡は存在しないので「防曇鏡」を案内してください。</div>
+        <div class="card"><div class="card-title">鏡 切放し（5mm）</div><div class="card-sub">カット加工のみ。通常の姿見は4方磨き加工品を選択してください。</div></div>
+        <div class="card"><div class="card-title">鏡 4方磨き（5mm）</div><div class="card-sub">4辺を磨いた仕上がり。姿見・額に入れない場合に使用。防湿加工なし。</div></div>
+        <div class="card"><div class="badge badge-blue">洗面所向け</div><div class="card-title">鏡 TED簡易防湿（5mm）</div><div class="card-sub">小口のみをコーティング。比較的湿気の少ない洗面所向け。</div></div>
+        <div class="card"><div class="badge badge-green">浴室向け</div><div class="card-title">鏡 OC防湿（5mm）</div><div class="card-sub">鏡全面をコーティング。腐食耐久性が高く浴室など湿度の高い場所に推奨。</div></div>
       </div>
     </div>
+  </div>
 
-    <!-- 在庫価格表 -->
-    <div id="s-stock" class="section">
-      <p style="font-size:11px;color:var(--text2);margin-bottom:12px">発注先：日本板硝子　単位：円（税別）／列=W・行=H（値以下の範囲）</p>
-      <div class="sec-lbl">3mm透明（FL3）</div><div class="tbl-scroll" id="tbl-fl3"></div>
-      <div class="sec-lbl">2mm透明（FL2）</div><div class="tbl-scroll" id="tbl-fl2"></div>
-      <div class="sec-lbl">5mm透明（FL5）</div><div class="tbl-scroll" id="tbl-fl5"></div>
+  <!-- ===== PAGE: 価格表 ===== -->
+  <div id="p-price" class="page">
+    <div style="padding-top:12px">
+      <div class="cat-tabs">
+        <button class="cat-btn active" onclick="showPriceCat('p-tanban',this)">単板（尺寸）</button>
+        <button class="cat-btn" onclick="showPriceCat('p-ami',this)">網入り（尺寸）</button>
+        <button class="cat-btn" onclick="showPriceCat('p-shiire',this)">仕入れ（㎡）</button>
+        <button class="cat-btn" onclick="showPriceCat('p-kyoka',this)">強化ガラス</button>
+        <button class="cat-btn" onclick="showPriceCat('p-moso',this)">複層・合わせ</button>
+        <button class="cat-btn" onclick="showPriceCat('p-kino',this)">防犯・特殊</button>
+        <button class="cat-btn" onclick="showPriceCat('p-kagami',this)">鏡</button>
+      </div>
+
+      <!-- 単板 尺寸 -->
+      <div id="p-tanban" class="cat-content active">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">発注先：日本板硝子　単位：円（税別）　列=W・行=H（その値以下の範囲）</p>
+        <div class="sec-lbl">3mm透明（FL3）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜914</th><th>〜1219</th><th>〜1829</th></tr>
+          <tr><td class="rh">〜303</td><td>1,300</td><td>1,300</td><td>1,400</td><td>1,800</td><td>2,700</td></tr>
+          <tr><td class="rh">〜455</td><td>1,300</td><td>1,300</td><td>2,000</td><td>2,700</td><td>4,100</td></tr>
+          <tr><td class="rh">〜914</td><td>1,400</td><td>2,000</td><td>4,100</td><td>5,400</td><td>8,100</td></tr>
+          <tr><td class="rh">〜1219</td><td>1,800</td><td>2,700</td><td>5,400</td><td>7,200</td><td>10,800</td></tr>
+          <tr><td class="rh">〜1829</td><td>2,700</td><td>4,100</td><td>8,100</td><td>10,800</td><td>16,300</td></tr>
+        </table></div>
+        <div class="sec-lbl">2mm透明（FL2）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜813</th></tr>
+          <tr><td class="rh">〜303</td><td>1,500</td><td>1,500</td><td>1,500</td></tr>
+          <tr><td class="rh">〜455</td><td>1,500</td><td>1,500</td><td>1,500</td></tr>
+          <tr><td class="rh">〜914</td><td>1,500</td><td>1,500</td><td>2,900</td></tr>
+        </table></div>
+        <div class="sec-lbl">5mm透明（FL5）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜914</th><th>〜1219</th><th>〜1829</th><th>〜2134</th><th>〜2438</th></tr>
+          <tr><td class="rh">〜303</td><td>1,800</td><td>1,800</td><td>1,900</td><td>2,600</td><td>3,800</td><td>4,400</td><td>5,100</td></tr>
+          <tr><td class="rh">〜455</td><td>1,800</td><td>1,800</td><td>2,900</td><td>3,800</td><td>5,700</td><td>6,700</td><td>7,600</td></tr>
+          <tr><td class="rh">〜914</td><td>1,900</td><td>2,900</td><td>5,700</td><td>7,700</td><td>11,500</td><td>13,400</td><td>15,300</td></tr>
+          <tr><td class="rh">〜1219</td><td>2,600</td><td>3,800</td><td>7,700</td><td>10,200</td><td>15,300</td><td>17,900</td><td>20,400</td></tr>
+          <tr><td class="rh">〜1829</td><td>3,800</td><td>5,700</td><td>11,500</td><td>15,300</td><td>23,000</td><td>26,800</td><td>30,600</td></tr>
+          <tr><td class="rh">〜2134</td><td>4,400</td><td>6,700</td><td>13,400</td><td>17,900</td><td>26,800</td><td class="na">—</td><td class="na">—</td></tr>
+          <tr><td class="rh">〜2438</td><td>5,100</td><td>7,600</td><td>15,300</td><td>20,400</td><td>30,600</td><td class="na">—</td><td class="na">—</td></tr>
+        </table></div>
+        <div class="sec-lbl">4mm型（F4A）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜914</th><th>〜1219</th><th>〜1829</th></tr>
+          <tr><td class="rh">〜303</td><td>2,100</td><td>2,100</td><td>2,200</td><td>2,900</td><td>4,400</td></tr>
+          <tr><td class="rh">〜455</td><td>2,100</td><td>2,100</td><td>3,300</td><td>4,400</td><td>6,600</td></tr>
+          <tr><td class="rh">〜914</td><td>2,200</td><td>3,300</td><td>6,600</td><td>8,900</td><td>13,300</td></tr>
+          <tr><td class="rh">〜1219</td><td>2,900</td><td>4,400</td><td>8,900</td><td>11,800</td><td>17,700</td></tr>
+          <tr><td class="rh">〜1829</td><td>4,400</td><td>6,600</td><td>13,300</td><td>17,700</td><td>26,600</td></tr>
+        </table></div>
+        <div class="sec-lbl">2mmポリカ型</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜914</th></tr>
+          <tr><td class="rh">〜303</td><td>3,000</td><td>3,000</td><td>3,600</td></tr>
+          <tr><td class="rh">〜455</td><td>3,000</td><td>3,000</td><td>5,400</td></tr>
+          <tr><td class="rh">〜914</td><td>4,000</td><td>6,000</td><td>6,000</td></tr>
+        </table></div>
+        <div class="sec-lbl">3mm摺（G3）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜914</th><th>〜1219</th><th>〜1829</th></tr>
+          <tr><td class="rh">〜303</td><td>4,200</td><td>4,200</td><td>4,900</td><td>6,500</td><td>9,800</td></tr>
+          <tr><td class="rh">〜455</td><td>4,200</td><td>4,200</td><td>7,400</td><td>9,800</td><td>14,700</td></tr>
+          <tr><td class="rh">〜914</td><td>4,900</td><td>7,400</td><td>14,800</td><td>19,700</td><td>29,600</td></tr>
+          <tr><td class="rh">〜1219</td><td>6,500</td><td>9,800</td><td>19,700</td><td>26,300</td><td>39,500</td></tr>
+          <tr><td class="rh">〜1829</td><td>9,800</td><td>14,700</td><td>29,600</td><td>39,500</td><td>59,200</td></tr>
+        </table></div>
+        <div class="sec-lbl">2mm摺（G2）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜303</th><th>〜455</th><th>〜813</th></tr>
+          <tr><td class="rh">〜303</td><td>1,600</td><td>1,600</td><td>1,600</td></tr>
+          <tr><td class="rh">〜455</td><td>1,600</td><td>1,600</td><td>1,600</td></tr>
+          <tr><td class="rh">〜914</td><td>1,600</td><td>1,600</td><td>3,200</td></tr>
+        </table></div>
+      </div>
+
+      <!-- 網入り 尺寸 -->
+      <div id="p-ami" class="cat-content">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">発注先：AGC硝子建材　単位：円（税別）　※発注時は網の形状を必ず記載</p>
+        <div class="sec-lbl">6.8mm網入り透明（PW6.8）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜606</th><th>〜914</th><th>〜1219</th><th>〜1829</th><th>〜2438</th></tr>
+          <tr><td class="rh">〜606</td><td class="na">—</td><td>9,900</td><td>20,000</td><td>29,900</td><td>39,900</td></tr>
+          <tr><td class="rh">〜914</td><td class="na">—</td><td>22,600</td><td>30,100</td><td>45,200</td><td>60,200</td></tr>
+          <tr><td class="rh">〜1219</td><td>20,000</td><td>30,100</td><td>40,100</td><td>60,200</td><td>80,300</td></tr>
+          <tr><td class="rh">〜1829</td><td>29,900</td><td>45,200</td><td>60,200</td><td>90,300</td><td>120,400</td></tr>
+          <tr><td class="rh">〜2438</td><td>39,900</td><td>60,200</td><td>80,300</td><td>120,400</td><td class="na">—</td></tr>
+        </table></div>
+        <div class="sec-lbl">6.8mm網入り型（FW6.8）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>H＼W</th><th>〜606</th><th>〜914</th><th>〜1219</th><th>〜1829</th><th>〜2438</th></tr>
+          <tr><td class="rh">〜606</td><td class="na">—</td><td>5,500</td><td>11,100</td><td>16,600</td><td>22,200</td></tr>
+          <tr><td class="rh">〜914</td><td class="na">—</td><td>12,500</td><td>16,700</td><td>25,100</td><td>33,400</td></tr>
+          <tr><td class="rh">〜1219</td><td>11,100</td><td>16,700</td><td>22,300</td><td>33,500</td><td>44,600</td></tr>
+          <tr><td class="rh">〜1829</td><td>16,600</td><td>25,100</td><td>33,500</td><td>50,200</td><td>66,900</td></tr>
+          <tr><td class="rh">〜2438</td><td>22,200</td><td>33,400</td><td>44,600</td><td>66,900</td><td class="na">—</td></tr>
+        </table></div>
+      </div>
+
+      <!-- 仕入れ ㎡ -->
+      <div id="p-shiire" class="cat-content">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">単位：円/㎡（税別）</p>
+        <div class="sec-lbl">フロートガラス（日本板硝子）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th><th>〜7.013㎡</th></tr>
+          <tr><td class="rh">3mm透明</td><td>5,300</td><td>4,100</td><td>4,100</td><td class="na">—</td></tr>
+          <tr><td class="rh">5mm透明</td><td>7,500</td><td>5,800</td><td>5,800</td><td>7,600</td></tr>
+          <tr><td class="rh">6mm透明</td><td>9,700</td><td>7,500</td><td>7,500</td><td>9,900</td></tr>
+          <tr><td class="rh">8mm透明</td><td>15,500</td><td>11,900</td><td>13,100</td><td>13,100</td></tr>
+        </table></div>
+        <div class="sec-lbl">型・摺ガラス（日本板硝子）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th></tr>
+          <tr><td class="rh">4mm型（F4A）</td><td>8,600</td><td>6,700</td><td>6,700</td></tr>
+          <tr><td class="rh">6mm型（F6A）</td><td>15,800</td><td>12,100</td><td>12,100</td></tr>
+          <tr><td class="rh">3mm摺（G3）</td><td>18,200</td><td>14,000</td><td class="na">—</td></tr>
+          <tr><td class="rh">5mm摺（G5）</td><td>30,800</td><td>23,700</td><td class="na">—</td></tr>
+        </table></div>
+        <div class="sec-lbl">網入りガラス（AGC硝子建材）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th></tr>
+          <tr><td class="rh">6.8mm網入り透明</td><td>22,500</td><td>22,500</td><td>25,000</td></tr>
+          <tr><td class="rh">6.8mm網入り型</td><td>12,500</td><td>12,500</td><td>13,800</td></tr>
+        </table></div>
+        <div class="sec-lbl">鏡（日本板硝子）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th></tr>
+          <tr><td class="rh">5mm鏡 切放し</td><td>26,600</td><td>20,400</td><td>20,400</td></tr>
+          <tr><td class="rh">5mm鏡 4方磨き</td><td>29,000</td><td>22,300</td><td>22,300</td></tr>
+          <tr><td class="rh">5mm鏡 TED簡易防湿</td><td>34,700</td><td>26,700</td><td>26,700</td></tr>
+          <tr><td class="rh">5mm鏡 OC防湿</td><td>57,100</td><td>43,900</td><td>43,900</td></tr>
+        </table></div>
+      </div>
+
+      <!-- 強化ガラス -->
+      <div id="p-kyoka" class="cat-content">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">発注先：AGC硝子建材　単位：円（税別）　※受注生産・納期要確認</p>
+        <div class="sec-lbl">強化ガラス（枚/㎡単価）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.3㎡（枚）</th><th>〜4㎡（㎡）</th></tr>
+          <tr><td class="rh">4mm透明強化（PT4）</td><td>4,400</td><td>11,300</td></tr>
+          <tr><td class="rh">5mm透明強化（PT5）</td><td>4,900</td><td>12,500</td></tr>
+          <tr><td class="rh">6mm透明強化（PT6）</td><td>6,900</td><td>17,500</td></tr>
+          <tr><td class="rh">4mm型強化（FBT4）</td><td>9,800</td><td>25,000</td></tr>
+        </table></div>
+        <div class="sec-lbl">耐熱強化ガラス（枚/㎡単価）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.3㎡（枚）</th><th>〜4㎡（㎡）</th></tr>
+          <tr><td class="rh">5mm透明耐熱強化（FR5）</td><td>13,700</td><td>35,000</td></tr>
+          <tr><td class="rh">6.5mm透明耐熱強化（FR65）</td><td>19,500</td><td>50,000</td></tr>
+          <tr><td class="rh">8mm透明耐熱強化（FR8）</td><td>24,400</td><td>62,500</td></tr>
+          <tr><td class="rh">5mm不透視耐熱強化（FRMX5）</td><td>19,500</td><td>50,000</td></tr>
+        </table></div>
+      </div>
+
+      <!-- 複層・合わせ -->
+      <div id="p-moso" class="cat-content">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">発注先：日本板硝子　単位：円（税別）　※全て受注生産</p>
+        <div class="sec-lbl">一般複層（ペアマルチ）枚/㎡単価</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>品番</th><th>〜0.3㎡(枚)グレチャン無</th><th>〜4㎡(㎡)グレチャン無</th><th>〜0.3㎡(枚)グレチャン付</th><th>〜4㎡(㎡)グレチャン付</th></tr>
+          <tr><td class="rh">3mm透明+A+3mm透明</td><td>AP6-D</td><td>5,900</td><td>15,000</td><td>6,800</td><td>17,300</td></tr>
+          <tr><td class="rh">5mm透明+A+5mm透明</td><td>AP10-D</td><td>10,700</td><td>27,300</td><td>11,600</td><td>29,500</td></tr>
+          <tr><td class="rh">4mm型+A+3mm透明</td><td>AP3F4-D</td><td>6,200</td><td>15,700</td><td>7,000</td><td>18,000</td></tr>
+          <tr><td class="rh">6.8mm網入り透明+A+3mm透明</td><td>AP3PW-D</td><td>18,100</td><td>46,300</td><td>19,000</td><td>48,500</td></tr>
+          <tr><td class="rh">6.8mm網入り型+A+3mm透明</td><td>AP3FW-D</td><td>12,000</td><td>30,600</td><td>12,800</td><td>32,800</td></tr>
+        </table></div>
+        <div class="sec-lbl">Low-E複層 日射取得型（ペアマルチスーパー）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>〜0.3㎡(枚)無</th><th>〜4㎡(㎡)無</th><th>〜0.3㎡(枚)付</th><th>〜4㎡(㎡)付</th></tr>
+          <tr><td class="rh">3mm透明+A+LowE3</td><td>9,100</td><td>23,300</td><td>10,000</td><td>25,500</td></tr>
+          <tr><td class="rh">5mm透明+A+LowE5</td><td>13,500</td><td>34,600</td><td>14,400</td><td>36,900</td></tr>
+          <tr><td class="rh">4mm型+A+LowE3</td><td>9,600</td><td>24,600</td><td>10,500</td><td>26,800</td></tr>
+          <tr><td class="rh">6.8mm網入り透明+A+LowE3</td><td>19,400</td><td>49,600</td><td>20,300</td><td>51,900</td></tr>
+          <tr><td class="rh">6.8mm網入り型+A+LowE3</td><td>14,100</td><td>36,100</td><td>15,000</td><td>38,400</td></tr>
+        </table></div>
+        <div class="sec-lbl">Low-E複層 日射遮蔽型（ペアマルチレイボーグ）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>〜0.3㎡(枚)無</th><th>〜4㎡(㎡)無</th><th>〜0.3㎡(枚)付</th><th>〜4㎡(㎡)付</th></tr>
+          <tr><td class="rh">LowE3+A+3mm透明</td><td>10,200</td><td>26,000</td><td>11,100</td><td>28,300</td></tr>
+          <tr><td class="rh">LowE5+A+5mm透明</td><td>15,000</td><td>38,500</td><td>15,900</td><td>40,800</td></tr>
+          <tr><td class="rh">LowE3+A+4mm型</td><td>11,100</td><td>28,400</td><td>12,000</td><td>30,700</td></tr>
+          <tr><td class="rh">LowE3+A+6.8mm網入り透明</td><td>20,500</td><td>52,500</td><td>21,400</td><td>54,700</td></tr>
+          <tr><td class="rh">LowE3+A+6.8mm網入り型</td><td>15,300</td><td>39,000</td><td>16,100</td><td>41,300</td></tr>
+        </table></div>
+        <div class="sec-lbl">Low-E複層 日射取得型（ペアマルチEA）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>〜0.3㎡(枚)無</th><th>〜4㎡(㎡)無</th><th>〜0.3㎡(枚)付</th><th>〜4㎡(㎡)付</th></tr>
+          <tr><td class="rh">LowE3+A+3mm透明</td><td>7,400</td><td>18,800</td><td>8,300</td><td>21,100</td></tr>
+          <tr><td class="rh">LowE5+A+5mm透明</td><td>13,500</td><td>34,400</td><td>14,300</td><td>36,600</td></tr>
+          <tr><td class="rh">LowE3+A+4mm型</td><td>7,700</td><td>19,700</td><td>8,600</td><td>22,000</td></tr>
+          <tr><td class="rh">LowE3+A+6.8mm網入り透明</td><td>19,700</td><td>50,500</td><td>20,600</td><td>52,700</td></tr>
+          <tr><td class="rh">LowE3+A+6.8mm網入り型</td><td>14,100</td><td>36,000</td><td>14,900</td><td>38,200</td></tr>
+        </table></div>
+        <div class="sec-lbl">真空ガラス（スペーシア）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>品番</th><th>〜0.3㎡（枚）</th><th>〜4㎡（㎡）</th></tr>
+          <tr><td class="rh">Low-E3mm透明+真空層+3mm透明</td><td>VNP3LEP3</td><td>21,200</td><td>48,200</td></tr>
+          <tr><td class="rh">Low-E3mm透明+真空層+3mm摺</td><td>VNP3LEG3</td><td>21,600</td><td>48,400</td></tr>
+        </table></div>
+        <div class="sec-lbl">合わせガラス（ラミペーン）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>品番</th><th>〜0.3㎡（枚）</th><th>〜4㎡（㎡）</th></tr>
+          <tr><td class="rh">3mm透明+中間膜15mil+3mm透明</td><td>LP6-Z</td><td>12,100</td><td>30,800</td></tr>
+          <tr><td class="rh">2mm透明+中間膜30mil+4mm型</td><td>LP2F4A-Z</td><td>12,700</td><td>32,400</td></tr>
+          <tr><td class="rh">3mm透明+中間膜15mil+3mm透明(カラー)</td><td>L4P6-Z</td><td>12,700</td><td>32,400</td></tr>
+          <tr><td class="rh">2mm透明+中間膜30mil+4mm型(カラー)</td><td>L4LP2F4A-Z</td><td>14,300</td><td>36,700</td></tr>
+        </table></div>
+        <div class="sec-lbl">防音ガラス（ソノグラス）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>構成</th><th>品番</th><th>〜0.3㎡（枚）</th><th>〜4㎡（㎡）</th></tr>
+          <tr><td class="rh">3mm透明+遮音膜30mil+3mm透明</td><td>L51P6-Z</td><td>14,900</td><td>38,100</td></tr>
+          <tr><td class="rh">2mm透明+遮音膜30mil+4mm型</td><td>L51P2F4A-Z</td><td>15,700</td><td>40,200</td></tr>
+        </table></div>
+      </div>
+
+      <!-- 防犯・特殊 -->
+      <div id="p-kino" class="cat-content">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">発注先：日本板硝子　単位：円（税別）　※受注生産</p>
+        <div class="sec-lbl">防犯ガラス（セキュオ）枚/㎡単価</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>種類</th><th>構成</th><th>品番</th><th>単板サッシ</th><th>〜0.3㎡(枚)</th><th>〜4㎡(㎡)</th><th>4㎡〜(㎡)</th></tr>
+          <tr><td class="rh" rowspan="3">セキュオ30</td><td>3mm透明+30mil+3mm透明</td><td>LP6-30</td><td>○</td><td>12,900</td><td>33,000</td><td>42,900</td></tr>
+          <tr><td>3mm透明+30mil+3mm型</td><td>LP3F3A-30</td><td>○</td><td>14,100</td><td>36,100</td><td>47,000</td></tr>
+          <tr><td>3mm透明+30mil+6.8mm網入り透明</td><td>LP3PWN-30</td><td>×</td><td>35,400</td><td>90,800</td><td>118,000</td></tr>
+          <tr><td class="rh" rowspan="4">セキュオ60</td><td>2.5mm透明+60mil+2.5mm透明</td><td>LP5T-60</td><td>○</td><td>14,900</td><td>38,000</td><td>49,400</td></tr>
+          <tr><td>2mm透明+60mil+3mm型</td><td>LP2F3A-60</td><td>○</td><td>16,100</td><td>41,100</td><td class="na">—</td></tr>
+          <tr><td>3mm透明+60mil+6.8mm網入り透明</td><td>LP3PWN-60</td><td>×</td><td>38,400</td><td>98,400</td><td>127,900</td></tr>
+          <tr><td>3mm透明+60mil+6.8mm網入り型</td><td>LP3WNA-60</td><td>×</td><td>29,000</td><td>74,300</td><td>96,600</td></tr>
+          <tr><td class="rh" rowspan="4">セキュオ90</td><td>3mm透明+90mil+3mm透明</td><td>LP6-90</td><td>×</td><td>18,900</td><td>48,300</td><td>62,800</td></tr>
+          <tr><td>3mm透明+90mil+4mm型</td><td>LP3F4A-90</td><td>×</td><td>20,200</td><td>51,800</td><td>67,300</td></tr>
+          <tr><td>3mm透明+90mil+6.8mm網入り透明</td><td>LP3PWN-90</td><td>×</td><td>41,400</td><td>106,000</td><td>137,800</td></tr>
+          <tr><td>3mm透明+90mil+6.8mm網入り型</td><td>LP3WNA-90</td><td>×</td><td>32,000</td><td>81,900</td><td>106,400</td></tr>
+          <tr><td class="rh" rowspan="3">セキュオSP</td><td>2.5mm透明+ポリカ1.2mm+2.5mm透明</td><td>LP5T-SP</td><td>○</td><td>28,700</td><td>73,500</td><td class="na">—</td></tr>
+          <tr><td>2mm透明+ポリカ1.2mm+3mm型</td><td>LP2F3A-SP</td><td>△</td><td>31,500</td><td>80,600</td><td class="na">—</td></tr>
+          <tr><td>3mm透明+ポリカ1.2mm+6.8mm網入り透明</td><td>LP3PW-SP</td><td>×</td><td>57,600</td><td>147,500</td><td class="na">—</td></tr>
+        </table></div>
+      </div>
+
+      <!-- 鏡 -->
+      <div id="p-kagami" class="cat-content">
+        <p style="font-size:10px;color:var(--text2);margin-bottom:10px">発注先：日本板硝子　単位：円（税別）</p>
+        <div class="sec-lbl">5mm鏡（㎡単価）</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th></tr>
+          <tr><td class="rh">切放し</td><td>26,600</td><td>20,400</td><td>20,400</td></tr>
+          <tr><td class="rh">4方磨き</td><td>29,000</td><td>22,300</td><td>22,300</td></tr>
+          <tr><td class="rh">TED簡易防湿</td><td>34,700</td><td>26,700</td><td>26,700</td></tr>
+          <tr><td class="rh">OC防湿</td><td>57,100</td><td>43,900</td><td>43,900</td></tr>
+        </table></div>
+        <div class="sec-lbl">鏡取付部材</div>
+        <div class="tbl-scroll"><table>
+          <tr><th>商品</th><th>構成</th><th>金額</th></tr>
+          <tr><td class="rh">鏡副資材</td><td>一式（ミラーボンド・マット等）</td><td>2,000</td></tr>
+          <tr><td class="rh">ツメ金具</td><td>1組（4ヶ入）</td><td>800</td></tr>
+          <tr><td class="rh">ステンレス上下レール</td><td>1組（L=1000）</td><td>8,000</td></tr>
+        </table></div>
+      </div>
     </div>
+  </div>
 
-    <!-- 仕入れ価格表 -->
-    <div id="s-order" class="section">
-      <p style="font-size:11px;color:var(--text2);margin-bottom:12px">発注先：日本板硝子　単位：円/㎡（税別）</p>
-      <div class="tbl-scroll"><table>
-        <tr><th>品種</th><th>〜0.2㎡</th><th>〜2.275㎡</th><th>〜4.598㎡</th><th>〜7.013㎡</th></tr>
-        <tr><td class="row-h">3mm（FL3）</td><td>5,300</td><td>4,100</td><td>4,100</td><td class="na">—</td></tr>
-        <tr><td class="row-h">5mm（FL5）</td><td>7,500</td><td>5,800</td><td>5,800</td><td>7,600</td></tr>
-        <tr><td class="row-h">6mm（FL6）</td><td>9,700</td><td>7,500</td><td>7,500</td><td>9,900</td></tr>
-        <tr><td class="row-h">8mm（FL8）</td><td>15,500</td><td>11,900</td><td>13,100</td><td>13,100</td></tr>
-      </table></div>
-    </div>
-
-    <!-- 見積もり -->
-    <div id="s-estimate" class="section">
-      <div class="tip">【単板ガラス修理】お客様宅へ伺う場合の見積もり計算機</div>
-
+  <!-- ===== PAGE: 見積もり ===== -->
+  <div id="p-estimate" class="page">
+    <div class="page-inner">
+      <div class="tip-box">【単板ガラス修理】お客様宅へ伺う場合の見積もり計算機</div>
       <div class="esec">
         <div class="esec-title"><span class="num">①</span>ガラス代（在庫・尺寸出し）</div>
-        <div class="cgrp">
-          <div class="clbl">品種</div>
+        <div class="cgrp"><div class="clbl">品種</div>
           <select id="e-type" onchange="calcEst()">
             <option value="fl3">3mm透明（FL3）</option>
             <option value="fl2">2mm透明（FL2）</option>
             <option value="fl5">5mm透明（FL5）</option>
+            <option value="f4a">4mm型（F4A）</option>
+            <option value="polka">2mmポリカ型</option>
+            <option value="g3">3mm摺（G3）</option>
+            <option value="g2">2mm摺（G2）</option>
           </select>
         </div>
         <div class="cgrp">
@@ -147,7 +459,6 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
         <div class="esec-note">適用範囲：<span id="e-glass-range">—</span>　→　<strong id="e-glass-price">—</strong></div>
       </div>
-
       <div class="esec">
         <div class="esec-title"><span class="num">②</span>出張・施工費</div>
         <div class="cgrp">
@@ -158,16 +469,11 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
         <div class="esec-note">出張費：<strong id="e-travel-price">—</strong>　／　施工費：<strong id="e-work-price">—</strong></div>
       </div>
-
       <div class="esec">
         <div class="esec-title"><span class="num">③</span>廃材搬出・処分費</div>
-        <div class="cgrp">
-          <div class="clbl">枚数</div>
-          <input type="number" id="e-waste" value="1" min="1" max="20" inputmode="numeric" oninput="calcEst()">
-        </div>
-        <div class="esec-note">処分費：<strong id="e-waste-price">—</strong>　<span>（3枚まで500円、4枚目から+100円/枚）</span></div>
+        <div class="cgrp"><div class="clbl">枚数</div><input type="number" id="e-waste" value="1" min="1" max="20" inputmode="numeric" oninput="calcEst()"></div>
+        <div class="esec-note">処分費：<strong id="e-waste-price">—</strong>　（3枚まで500円、4枚目から+100円/枚）</div>
       </div>
-
       <div class="bdown">
         <div class="brow"><span class="lbl">①ガラス代</span><span class="amt" id="b-glass">—</span></div>
         <div class="brow"><span class="lbl">②出張費</span><span class="amt" id="b-travel">—</span></div>
@@ -176,89 +482,113 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         <div class="brow"><span class="lbl">④諸経費（5%・最低2,000円）</span><span class="amt" id="b-misc">—</span></div>
         <div class="btotal"><span>合計（税別）</span><span class="amt" id="b-total">—</span></div>
       </div>
-
       <div class="total-card">
         <div class="lbl">お見積り金額（税別）</div>
         <div class="price" id="e-total">—</div>
         <div class="sub" id="e-tax">税込：—</div>
       </div>
-
       <div class="note-green">※施工時間が2時間を超える場合は日分割計算で算出してください。<br>（例）2時間半かかる場合 → ¥12,000〜</div>
     </div>
+  </div>
 
-    <!-- 価格検索 -->
-    <div id="s-calc" class="section">
+  <!-- ===== PAGE: 価格検索 ===== -->
+  <div id="p-search" class="page">
+    <div class="page-inner">
       <div class="card">
-        <div class="card-title" style="margin-bottom:14px">在庫ガラス（尺寸出し）</div>
-        <div class="cgrp"><div class="clbl">品種</div><select id="c-type" onchange="calcStock()"><option value="fl3">3mm透明（FL3）</option><option value="fl2">2mm透明（FL2）</option><option value="fl5">5mm透明（FL5）</option></select></div>
-        <div class="cgrp"><div class="irow"><div><div class="clbl">W（幅）mm</div><input type="number" id="c-w" value="800" min="1" inputmode="numeric" oninput="calcStock()"></div><div><div class="clbl">H（高さ）mm</div><input type="number" id="c-h" value="800" min="1" inputmode="numeric" oninput="calcStock()"></div></div></div>
+        <div class="card-title" style="margin-bottom:12px">在庫ガラス（尺寸出し）</div>
+        <div class="cgrp"><div class="clbl">品種</div>
+          <select id="c-type" onchange="calcStock()">
+            <option value="fl3">3mm透明（FL3）</option>
+            <option value="fl2">2mm透明（FL2）</option>
+            <option value="fl5">5mm透明（FL5）</option>
+            <option value="f4a">4mm型（F4A）</option>
+            <option value="polka">2mmポリカ型</option>
+            <option value="g3">3mm摺（G3）</option>
+            <option value="g2">2mm摺（G2）</option>
+          </select>
+        </div>
+        <div class="cgrp">
+          <div class="irow">
+            <div><div class="clbl">W（幅）mm</div><input type="number" id="c-w" value="800" min="1" inputmode="numeric" oninput="calcStock()"></div>
+            <div><div class="clbl">H（高さ）mm</div><input type="number" id="c-h" value="800" min="1" inputmode="numeric" oninput="calcStock()"></div>
+          </div>
+        </div>
         <div class="rbox" id="srbox"><div class="rl">価格（税別）</div><div class="rp" id="sprice">—</div><div class="rh" id="shint"></div></div>
       </div>
       <div class="card">
-        <div class="card-title" style="margin-bottom:14px">仕入れガラス（㎡出し）</div>
-        <div class="cgrp"><div class="clbl">品種</div><select id="o-type" onchange="calcOrder()"><option value="fl3">3mm透明（FL3）</option><option value="fl5">5mm透明（FL5）</option><option value="fl6">6mm透明（FL6）</option><option value="fl8">8mm透明（FL8）</option></select></div>
+        <div class="card-title" style="margin-bottom:12px">仕入れガラス（㎡出し）</div>
+        <div class="cgrp"><div class="clbl">品種</div>
+          <select id="o-type" onchange="calcOrder()">
+            <option value="fl3">3mm透明（FL3）</option>
+            <option value="fl5">5mm透明（FL5）</option>
+            <option value="fl6">6mm透明（FL6）</option>
+            <option value="fl8">8mm透明（FL8）</option>
+            <option value="f4a_m">4mm型（F4A）</option>
+            <option value="f6a">6mm型（F6A）</option>
+            <option value="g3_m">3mm摺（G3）</option>
+            <option value="g5">5mm摺（G5）</option>
+            <option value="pw68">6.8mm網入り透明</option>
+            <option value="fw68">6.8mm網入り型</option>
+          </select>
+        </div>
         <div class="cgrp"><div class="clbl">面積（㎡）</div><input type="number" id="o-area" value="0.5" min="0.001" step="0.001" inputmode="decimal" oninput="calcOrder()"></div>
         <div class="rbox" id="orbox"><div class="rl">単価 / 合計（税別）</div><div class="rp" id="oprice">—</div><div class="rh" id="ohint"></div></div>
       </div>
     </div>
+  </div>
 
-  </div><!-- /content -->
+</div><!-- /content -->
 
-  <nav>
-    <div class="tab-indicator" id="indicator"></div>
-    <button class="tab-btn active" onclick="switchTab('products',0)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>製品一覧
-    </button>
-    <button class="tab-btn" onclick="switchTab('stock',1)">
-      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>在庫価格
-    </button>
-    <button class="tab-btn" onclick="switchTab('order',2)">
-      <svg viewBox="0 0 24 24"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>仕入価格
-    </button>
-    <button class="tab-btn" onclick="switchTab('estimate',3)">
-      <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>見積もり
-    </button>
-    <button class="tab-btn" onclick="switchTab('calc',4)">
-      <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>価格検索
-    </button>
-  </nav>
+<nav class="main-nav">
+  <div class="main-indicator" id="main-ind"></div>
+  <button class="mnav-btn active" onclick="showPage('p-catalog',0)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>製品一覧
+  </button>
+  <button class="mnav-btn" onclick="showPage('p-price',1)">
+    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/><line x1="15" y1="9" x2="15" y2="21"/></svg>価格表
+  </button>
+  <button class="mnav-btn" onclick="showPage('p-estimate',2)">
+    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>見積もり
+  </button>
+  <button class="mnav-btn" onclick="showPage('p-search',3)">
+    <svg viewBox="0 0 24 24"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>価格検索
+  </button>
+</nav>
 </div>
 
 <script>
+// ===== DATA =====
 const stockData={
   fl3:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[1300,1300,1400,1800,2700],[1300,1300,2000,2700,4100],[1400,2000,4100,5400,8100],[1800,2700,5400,7200,10800],[2700,4100,8100,10800,16300]]},
   fl2:{cols:[303,455,813],rows:[303,455,914],prices:[[1500,1500,1500],[1500,1500,1500],[1500,1500,2900]]},
-  fl5:{cols:[303,455,914,1219,1829,2134,2438],rows:[303,455,914,1219,1829,2134,2438],prices:[[1800,1800,1900,2600,3800,4400,5100],[1800,1800,2900,3800,5700,6700,7600],[1900,2900,5700,7700,11500,13400,15300],[2600,3800,7700,10200,15300,17900,20400],[3800,5700,11500,15300,23000,26800,30600],[4400,6700,13400,17900,26800,null,null],[5100,7600,15300,20400,30600,null,null]]}
+  fl5:{cols:[303,455,914,1219,1829,2134,2438],rows:[303,455,914,1219,1829,2134,2438],prices:[[1800,1800,1900,2600,3800,4400,5100],[1800,1800,2900,3800,5700,6700,7600],[1900,2900,5700,7700,11500,13400,15300],[2600,3800,7700,10200,15300,17900,20400],[3800,5700,11500,15300,23000,26800,30600],[4400,6700,13400,17900,26800,null,null],[5100,7600,15300,20400,30600,null,null]]},
+  f4a:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[2100,2100,2200,2900,4400],[2100,2100,3300,4400,6600],[2200,3300,6600,8900,13300],[2900,4400,8900,11800,17700],[4400,6600,13300,17700,26600]]},
+  polka:{cols:[303,455,914],rows:[303,455,914],prices:[[3000,3000,3600],[3000,3000,5400],[4000,6000,6000]]},
+  g3:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[4200,4200,4900,6500,9800],[4200,4200,7400,9800,14700],[4900,7400,14800,19700,29600],[6500,9800,19700,26300,39500],[9800,14700,29600,39500,59200]]},
+  g2:{cols:[303,455,813],rows:[303,455,914],prices:[[1600,1600,1600],[1600,1600,1600],[1600,1600,3200]]}
 };
 const orderData={
   fl3:[[0.2,5300],[2.275,4100],[4.598,4100],[9999,null]],
   fl5:[[0.2,7500],[2.275,5800],[4.598,5800],[7.013,7600],[9999,null]],
   fl6:[[0.2,9700],[2.275,7500],[4.598,7500],[7.013,9900],[9999,null]],
-  fl8:[[0.2,15500],[2.275,11900],[4.598,13100],[7.013,13100],[9999,null]]
+  fl8:[[0.2,15500],[2.275,11900],[4.598,13100],[7.013,13100],[9999,null]],
+  f4a_m:[[0.2,8600],[2.275,6700],[4.598,6700],[9999,null]],
+  f6a:[[0.2,15800],[2.275,12100],[4.598,12100],[9999,null]],
+  g3_m:[[0.2,18200],[2.275,14000],[9999,null]],
+  g5:[[0.2,30800],[2.275,23700],[9999,null]],
+  pw68:[[0.2,22500],[2.275,22500],[4.598,25000],[9999,null]],
+  fw68:[[0.2,12500],[2.275,12500],[4.598,13800],[9999,null]]
 };
+const travelTbl=[[5,1000],[10,2000],[15,2000],[20,2000],[25,4000],[30,4000],[35,4000],[40,6000],[45,6000],[50,6000],[55,8000],[60,8000],[65,10000],[70,10000],[75,10000],[80,10000],[85,12000],[90,12000]];
+const workTbl=[[15,2000],[30,2000],[45,3000],[60,4000],[75,5000],[95,6000],[110,7000],[120,8000]];
 
-// 出張費テーブル（片道分数→金額）
-const travelTbl=[
-  [5,1000],[10,2000],[15,2000],[20,2000],[25,4000],
-  [30,4000],[35,4000],[40,6000],[45,6000],[50,6000],
-  [55,8000],[60,8000],[65,10000],[70,10000],[75,10000],
-  [80,10000],[85,12000],[90,12000]
-];
-// 施工費テーブル・単板（施工分数→金額）
-const workTbl=[
-  [15,2000],[30,2000],[45,3000],[60,4000],
-  [75,5000],[95,6000],[110,7000],[120,8000]
-];
-
-function lookup(tbl,val){
-  for(let i=0;i<tbl.length;i++) if(val<=tbl[i][0]) return tbl[i][1];
-  return null;
-}
+function lookup(tbl,val){for(let i=0;i<tbl.length;i++)if(val<=tbl[i][0])return tbl[i][1];return null;}
 function findIdx(arr,val){for(let i=0;i<arr.length;i++)if(val<=arr[i])return i;return -1;}
 function fmt(n){return n!=null?'¥'+n.toLocaleString():'—';}
 
 function getGlass(type,w,h){
   const d=stockData[type];
+  if(!d) return{price:null,range:'対応品種なし'};
   const ci=findIdx(d.cols,w),ri=findIdx(d.rows,h);
   if(ci<0||ri<0) return{price:null,range:'範囲外'};
   const p=d.prices[ri][ci];
@@ -275,91 +605,67 @@ function calcEst(){
   const tMin=parseInt(document.getElementById('e-travel').value)||0;
   const wMin=parseInt(document.getElementById('e-work').value)||0;
   const waste=parseInt(document.getElementById('e-waste').value)||1;
-
   const g=getGlass(type,w,h);
   document.getElementById('e-glass-range').textContent=g.range;
   document.getElementById('e-glass-price').textContent=fmt(g.price);
-
-  const tp=lookup(travelTbl,tMin);
-  const wp=lookup(workTbl,wMin);
+  const tp=lookup(travelTbl,tMin),wp=lookup(workTbl,wMin);
   document.getElementById('e-travel-price').textContent=fmt(tp);
   document.getElementById('e-work-price').textContent=fmt(wp);
-
   const wasteP=waste<=3?500:500+(waste-3)*100;
   document.getElementById('e-waste-price').textContent=fmt(wasteP);
-
   if(g.price==null||tp==null||wp==null){
     ['b-glass','b-travel','b-work','b-waste','b-misc','b-total'].forEach(id=>document.getElementById(id).textContent='—');
-    document.getElementById('e-total').textContent='計算不可';
-    document.getElementById('e-tax').textContent='入力値を確認してください';
-    return;
+    document.getElementById('e-total').textContent='計算不可';document.getElementById('e-tax').textContent='入力値を確認';return;
   }
-  const sub=g.price+tp+wp+wasteP;
-  const misc=Math.max(2000,Math.round(sub*0.05));
-  const total=sub+misc;
-  document.getElementById('b-glass').textContent=fmt(g.price);
-  document.getElementById('b-travel').textContent=fmt(tp);
-  document.getElementById('b-work').textContent=fmt(wp);
-  document.getElementById('b-waste').textContent=fmt(wasteP);
-  document.getElementById('b-misc').textContent=fmt(misc);
-  document.getElementById('b-total').textContent=fmt(total);
+  const sub=g.price+tp+wp+wasteP,misc=Math.max(2000,Math.round(sub*0.05)),total=sub+misc;
+  document.getElementById('b-glass').textContent=fmt(g.price);document.getElementById('b-travel').textContent=fmt(tp);
+  document.getElementById('b-work').textContent=fmt(wp);document.getElementById('b-waste').textContent=fmt(wasteP);
+  document.getElementById('b-misc').textContent=fmt(misc);document.getElementById('b-total').textContent=fmt(total);
   document.getElementById('e-total').textContent=fmt(total);
   document.getElementById('e-tax').textContent='税込：'+fmt(Math.round(total*1.1));
 }
 
 function calcStock(){
   const g=getGlass(document.getElementById('c-type').value,parseInt(document.getElementById('c-w').value)||0,parseInt(document.getElementById('c-h').value)||0);
-  const box=document.getElementById('srbox');
-  box.className='rbox';
+  const box=document.getElementById('srbox');box.className='rbox';
   if(g.price==null){box.classList.add('err');document.getElementById('sprice').textContent='範囲外';document.getElementById('shint').textContent=g.range;return;}
-  document.getElementById('sprice').textContent=fmt(g.price);
-  document.getElementById('shint').textContent='適用範囲：'+g.range;
+  document.getElementById('sprice').textContent=fmt(g.price);document.getElementById('shint').textContent='適用範囲：'+g.range;
 }
 
 function calcOrder(){
   const area=parseFloat(document.getElementById('o-area').value)||0;
   const d=orderData[document.getElementById('o-type').value];
-  let unit=null;
-  for(const [max,p] of d){if(area<=max){unit=p;break;}}
-  const box=document.getElementById('orbox');
-  box.className='rbox';
+  let unit=null;for(const [max,p] of d){if(area<=max){unit=p;break;}}
+  const box=document.getElementById('orbox');box.className='rbox';
   if(!unit){box.classList.add('err');document.getElementById('oprice').textContent='範囲外';document.getElementById('ohint').textContent='';return;}
   document.getElementById('oprice').textContent=fmt(unit)+'/㎡';
   document.getElementById('ohint').textContent='合計 '+fmt(Math.round(unit*area));
 }
 
-function buildTable(key){
-  const d=stockData[key];
-  let h='<table><tr><th>H＼W</th>';
-  d.cols.forEach(c=>{h+=`<th>〜${c}</th>`;});
-  h+='</tr>';
-  d.rows.forEach((r,ri)=>{
-    h+=`<tr><td class="row-h">〜${r}</td>`;
-    d.cols.forEach((c,ci)=>{const p=d.prices[ri][ci];h+=p!=null?`<td>${p.toLocaleString()}</td>`:`<td class="na">—</td>`;});
-    h+='</tr>';
-  });
-  return h+'</table>';
+function showPage(id,idx){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.mnav-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.mnav-btn')[idx].classList.add('active');
+  updateMainInd(idx);
 }
-document.getElementById('tbl-fl3').innerHTML=buildTable('fl3');
-document.getElementById('tbl-fl2').innerHTML=buildTable('fl2');
-document.getElementById('tbl-fl5').innerHTML=buildTable('fl5');
-
-function switchTab(name,idx){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('s-'+name).classList.add('active');
-  document.querySelectorAll('.tab-btn')[idx].classList.add('active');
-  document.getElementById('content').scrollTop=0;
-  updateIndicator(idx);
+function updateMainInd(idx){
+  const n=document.querySelectorAll('.mnav-btn').length;
+  const ind=document.getElementById('main-ind');
+  ind.style.width=(100/n)+'%';ind.style.left=(100/n*idx)+'%';
 }
-function updateIndicator(idx){
-  const n=document.querySelectorAll('.tab-btn').length;
-  const ind=document.getElementById('indicator');
-  ind.style.width=(100/n)+'%';
-  ind.style.left=(100/n*idx)+'%';
+function showCat(id,btn){
+  document.querySelectorAll('#cat-'+['tanban','moso','lowe','kino','kagami'].join(',#cat-')).forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('#cat-tabs .cat-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('cat-'+id).classList.add('active');btn.classList.add('active');
+}
+function showPriceCat(id,btn){
+  ['p-tanban','p-ami','p-shiire','p-kyoka','p-moso','p-kino','p-kagami'].forEach(i=>{const el=document.getElementById(i);if(el)el.classList.remove('active');});
+  document.querySelectorAll('#p-price .cat-btn').forEach(b=>b.classList.remove('active'));
+  const el=document.getElementById(id);if(el)el.classList.add('active');btn.classList.add('active');
 }
 
-calcEst();calcStock();calcOrder();updateIndicator(0);
+calcEst();calcStock();calcOrder();updateMainInd(0);
 if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js').catch(()=>{});
 </script>
 </body>
