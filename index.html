@@ -29,16 +29,16 @@ nav.main-nav{height:54px;background:var(--surface);border-top:1px solid var(--bo
 .page{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
 .page.active{display:block}
 .page-inner{padding:14px}
-.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 14px 10px;flex-shrink:0;-webkit-overflow-scrolling:touch}
+.cat-tabs{display:flex;gap:6px;overflow-x:auto;padding:12px 14px 10px;-webkit-overflow-scrolling:touch}
 .cat-tabs::-webkit-scrollbar{display:none}
 .cat-btn{white-space:nowrap;padding:7px 14px;border-radius:20px;border:1px solid var(--border);background:var(--surface);color:var(--text2);font-size:12px;font-family:inherit;cursor:pointer;flex-shrink:0}
 .cat-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .cat-content{display:none;padding:0 14px 14px}
 .cat-content.active{display:block}
-
-/* Product card with image */
 .pcard{background:var(--surface);border-radius:14px;margin-bottom:12px;border:1px solid var(--border);overflow:hidden}
-.pcard-img{width:100%;height:120px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0}
+.pcard-img{width:100%;height:160px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--surface2)}
+.pcard-img img{width:100%;height:100%;object-fit:cover}
+.pcard-img.contain img{object-fit:contain;padding:8px}
 .pcard-body{padding:12px 14px}
 .pcard-title{font-size:13px;font-weight:700;margin-bottom:3px}
 .pcard-sub{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:10px}
@@ -51,10 +51,7 @@ nav.main-nav{height:54px;background:var(--surface);border-top:1px solid var(--bo
 .badge-green{background:#e8f5ee;color:#2d6a4f}
 .badge-orange{background:#fff0e0;color:#b35c00}
 .tip-box{background:#fffbe6;border:1px solid #f0c040;border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;line-height:1.6;color:#7c5800}
-.warn-box{background:#fff0e0;border:1px solid #f0a040;border-radius:10px;padding:11px 13px;margin-bottom:12px;font-size:11px;line-height:1.6;color:#7c3000}
 .note-green{background:var(--green-bg);border:1px solid #a8d5be;border-radius:10px;padding:10px 12px;font-size:11px;color:var(--green);line-height:1.6;margin-top:10px}
-
-/* Estimate */
 .esec{background:var(--surface);border-radius:12px;padding:14px;margin-bottom:10px;border:1px solid var(--border)}
 .esec-title{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:7px}
 .esec-title .num{background:var(--accent);color:#fff;border-radius:50%;width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
@@ -82,11 +79,11 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
 <header>
   <div class="logo"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/></svg></div>
   <h1>ガラス価格表</h1>
-  <span class="version">v4.0</span>
+  <span class="version">v5.0</span>
 </header>
 <div id="content">
 
-<!-- ===== PAGE: 製品一覧 ===== -->
+<!-- 製品一覧 -->
 <div id="p-catalog" class="page active">
   <div class="cat-tabs" id="cat-tabs">
     <button class="cat-btn active" onclick="showCat('tanban',this)">単板ガラス</button>
@@ -99,17 +96,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   <!-- 単板 -->
   <div id="cat-tanban" class="cat-content active">
     <div class="tip-box">修理の際は必ず厚みを計ってください。住宅窓は「3mm」「5mm」が最多使用です。</div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e8f4fd 0%,#c8e6f7 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="15" width="140" height="90" rx="4" fill="rgba(200,230,250,0.5)" stroke="#5aa0d0" stroke-width="1.5"/>
-          <rect x="38" y="23" width="124" height="74" rx="2" fill="rgba(220,240,255,0.4)" stroke="#7bbfe0" stroke-width="1"/>
-          <line x1="30" y1="15" x2="170" y2="105" stroke="rgba(255,255,255,0.7)" stroke-width="8"/>
-          <line x1="50" y1="15" x2="170" y2="85" stroke="rgba(255,255,255,0.4)" stroke-width="4"/>
-          <text x="100" y="68" text-anchor="middle" font-size="11" fill="#1a6090" font-family="sans-serif" font-weight="bold">透明ガラス</text>
-        </svg>
-      </div>
+      <div class="pcard-img"><img id="img-float" src="" alt="フロートガラス"></div>
       <div class="pcard-body">
         <div class="badge badge-blue">最多使用</div>
         <div class="pcard-title">フロートガラス 透明（FL）</div>
@@ -122,35 +110,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#f0ede8 0%,#ddd8d0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="15" width="140" height="90" rx="4" fill="rgba(200,185,165,0.4)" stroke="#8a7a6a" stroke-width="1.5"/>
-          <g opacity="0.7">
-            <circle cx="55" cy="30" r="3" fill="#8a7a6a"/><circle cx="70" cy="25" r="2" fill="#8a7a6a"/>
-            <circle cx="85" cy="32" r="3.5" fill="#8a7a6a"/><circle cx="100" cy="27" r="2.5" fill="#8a7a6a"/>
-            <circle cx="115" cy="33" r="3" fill="#8a7a6a"/><circle cx="130" cy="26" r="2" fill="#8a7a6a"/>
-            <circle cx="145" cy="31" r="3" fill="#8a7a6a"/>
-            <circle cx="48" cy="45" r="2.5" fill="#8a7a6a"/><circle cx="63" cy="40" r="3" fill="#8a7a6a"/>
-            <circle cx="78" cy="47" r="2" fill="#8a7a6a"/><circle cx="93" cy="42" r="3.5" fill="#8a7a6a"/>
-            <circle cx="108" cy="48" r="2.5" fill="#8a7a6a"/><circle cx="123" cy="41" r="3" fill="#8a7a6a"/>
-            <circle cx="138" cy="46" r="2" fill="#8a7a6a"/><circle cx="153" cy="43" r="3" fill="#8a7a6a"/>
-            <circle cx="55" cy="60" r="3" fill="#8a7a6a"/><circle cx="70" cy="55" r="2.5" fill="#8a7a6a"/>
-            <circle cx="85" cy="62" r="3.5" fill="#8a7a6a"/><circle cx="100" cy="57" r="2" fill="#8a7a6a"/>
-            <circle cx="115" cy="63" r="3" fill="#8a7a6a"/><circle cx="130" cy="58" r="2.5" fill="#8a7a6a"/>
-            <circle cx="145" cy="61" r="3" fill="#8a7a6a"/>
-            <circle cx="48" cy="75" r="2" fill="#8a7a6a"/><circle cx="63" cy="70" r="3" fill="#8a7a6a"/>
-            <circle cx="78" cy="77" r="2.5" fill="#8a7a6a"/><circle cx="93" cy="72" r="3.5" fill="#8a7a6a"/>
-            <circle cx="108" cy="78" r="2" fill="#8a7a6a"/><circle cx="123" cy="73" r="3" fill="#8a7a6a"/>
-            <circle cx="138" cy="76" r="2.5" fill="#8a7a6a"/><circle cx="153" cy="71" r="3" fill="#8a7a6a"/>
-            <circle cx="55" cy="90" r="3" fill="#8a7a6a"/><circle cx="70" cy="87" r="2" fill="#8a7a6a"/>
-            <circle cx="85" cy="93" r="3.5" fill="#8a7a6a"/><circle cx="100" cy="88" r="2.5" fill="#8a7a6a"/>
-            <circle cx="115" cy="92" r="3" fill="#8a7a6a"/><circle cx="130" cy="89" r="2" fill="#8a7a6a"/>
-          </g>
-          <text x="100" y="112" text-anchor="middle" font-size="10" fill="#5a4a3a" font-family="sans-serif">デコボコ面</text>
-        </svg>
-      </div>
+      <div class="pcard-img"><img id="img-kata" src="" alt="型ガラス"></div>
       <div class="pcard-body">
         <div class="badge badge-orange">要確認</div>
         <div class="pcard-title">型ガラス（F4A / F6A）</div>
@@ -159,21 +120,11 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
           <div class="spec-chip">厚み <strong>4mm・6mm</strong></div>
           <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
           <div class="spec-chip">4mm最大 <strong>1,829×914mm</strong></div>
-          <div class="spec-chip">6mm最大 <strong>2,438×1,829mm</strong></div>
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#f0ede8 0%,#e0dbd4 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="15" width="140" height="90" rx="4" fill="rgba(210,200,188,0.4)" stroke="#8a7a6a" stroke-width="1.5"/>
-          <filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="4" result="noiseOut"/><feDisplacementMap in="SourceGraphic" in2="noiseOut" scale="4" xChannelSelector="R" yChannelSelector="G"/></filter>
-          <rect x="31" y="16" width="138" height="88" fill="rgba(195,185,172,0.5)" filter="url(#noise)"/>
-          <text x="100" y="65" text-anchor="middle" font-size="11" fill="#5a4a3a" font-family="sans-serif" font-weight="bold">ザラザラ面</text>
-          <text x="100" y="80" text-anchor="middle" font-size="9" fill="#7a6a5a" font-family="sans-serif">水に濡れると透明度↑</text>
-        </svg>
-      </div>
+      <div class="pcard-img"><img id="img-suri" src="" alt="摺ガラス"></div>
       <div class="pcard-body">
         <div class="badge badge-orange">要確認</div>
         <div class="pcard-title">摺ガラス（G3 / G5）</div>
@@ -185,22 +136,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e8f0f8 0%,#ccd8e8 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="15" width="140" height="90" rx="4" fill="rgba(180,210,235,0.35)" stroke="#5a80a0" stroke-width="1.5"/>
-          <!-- 菱形ワイヤー -->
-          <g stroke="#555" stroke-width="0.8" opacity="0.6">
-            <line x1="30" y1="15" x2="170" y2="105"/><line x1="50" y1="15" x2="170" y2="85"/><line x1="70" y1="15" x2="170" y2="65"/><line x1="90" y1="15" x2="170" y2="45"/><line x1="110" y1="15" x2="170" y2="25"/><line x1="130" y1="15" x2="170" y2="15"/>
-            <line x1="30" y1="35" x2="150" y2="105"/><line x1="30" y1="55" x2="130" y2="105"/><line x1="30" y1="75" x2="110" y2="105"/><line x1="30" y1="95" x2="90" y2="105"/>
-            <line x1="170" y1="15" x2="30" y2="105"/><line x1="150" y1="15" x2="30" y2="85"/><line x1="130" y1="15" x2="30" y2="65"/><line x1="110" y1="15" x2="30" y2="45"/><line x1="90" y1="15" x2="30" y2="25"/>
-            <line x1="170" y1="35" x2="50" y2="105"/><line x1="170" y1="55" x2="70" y2="105"/><line x1="170" y1="75" x2="90" y2="105"/><line x1="170" y1="95" x2="110" y2="105"/>
-          </g>
-          <text x="100" y="65" text-anchor="middle" font-size="10" fill="#1a4060" font-family="sans-serif" font-weight="bold">菱形ワイヤー</text>
-          <text x="100" y="80" text-anchor="middle" font-size="9" fill="#3a6080" font-family="sans-serif">防火・飛散防止</text>
-        </svg>
-      </div>
+      <div class="pcard-img"><img id="img-ami-t" src="" alt="網入りガラス透明"></div>
       <div class="pcard-body">
         <div class="pcard-title">網入りガラス 透明（PW6.8）</div>
         <div class="pcard-sub">防火・飛散防止性能あり。法規上定められた箇所に使用義務。直射日光で熱割れに注意。発注時は網の形状を必ず記載。透明は型より高め。</div>
@@ -212,19 +149,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#ede8f0 0%,#d8d0e0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="15" width="140" height="90" rx="4" fill="rgba(185,175,205,0.35)" stroke="#6a5a80" stroke-width="1.5"/>
-          <g stroke="#555" stroke-width="0.8" opacity="0.6">
-            <line x1="30" y1="30" x2="170" y2="30"/><line x1="30" y1="45" x2="170" y2="45"/><line x1="30" y1="60" x2="170" y2="60"/><line x1="30" y1="75" x2="170" y2="75"/><line x1="30" y1="90" x2="170" y2="90"/>
-            <line x1="55" y1="15" x2="55" y2="105"/><line x1="80" y1="15" x2="80" y2="105"/><line x1="105" y1="15" x2="105" y2="105"/><line x1="130" y1="15" x2="130" y2="105"/><line x1="155" y1="15" x2="155" y2="105"/>
-          </g>
-          <text x="100" y="65" text-anchor="middle" font-size="10" fill="#3a2a50" font-family="sans-serif" font-weight="bold">クロスワイヤー</text>
-          <text x="100" y="80" text-anchor="middle" font-size="9" fill="#5a4a70" font-family="sans-serif">防火・飛散防止</text>
-        </svg>
-      </div>
+      <div class="pcard-img"><img id="img-ami-k" src="" alt="網入りガラス型"></div>
       <div class="pcard-body">
         <div class="pcard-title">網入りガラス 型（FW6.8）</div>
         <div class="pcard-sub">デコボコ＋ワイヤー入り。透明より安価。防火性能あり。</div>
@@ -235,27 +161,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#f8f0e8 0%,#e8ddd0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="30" y="15" width="140" height="90" rx="4" fill="rgba(220,210,195,0.4)" stroke="#8a7060" stroke-width="1.5"/>
-          <!-- 割れたガラスの破片イメージ（粉々） -->
-          <g fill="rgba(180,165,145,0.5)" stroke="#8a7060" stroke-width="0.5">
-            <polygon points="70,40 85,35 90,55 75,58"/>
-            <polygon points="90,30 110,28 115,45 95,50"/>
-            <polygon points="55,55 72,52 68,70 50,68"/>
-            <polygon points="75,62 92,58 95,78 78,80"/>
-            <polygon points="95,50 118,48 120,68 98,72"/>
-            <polygon points="50,72 68,70 65,88 48,85"/>
-            <polygon points="80,82 98,78 100,95 82,96"/>
-            <polygon points="110,65 128,62 130,82 112,84"/>
-            <polygon points="118,40 138,38 140,55 122,58"/>
-            <polygon points="130,55 148,52 150,70 132,72"/>
-          </g>
-          <text x="100" y="112" text-anchor="middle" font-size="9" fill="#6a5040" font-family="sans-serif">割れると粉々に（安全）</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-kyoka" src="" alt="強化ガラス"></div>
       <div class="pcard-body">
         <div class="badge badge-red">受注生産</div>
         <div class="pcard-title">強化ガラス（PT4〜PT6 / FBT4）</div>
@@ -263,8 +170,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         <div class="pcard-specs">
           <div class="spec-chip">厚み <strong>4・5・6mm（型4mm）</strong></div>
           <div class="spec-chip">発注先 <strong>AGC硝子建材</strong></div>
-          <div class="spec-chip">商品名 <strong>テンパライト（透明）</strong></div>
-          <div class="spec-chip">型商品名 <strong>ミストロンエース</strong></div>
+          <div class="spec-chip">商品名 <strong>テンパライト</strong></div>
         </div>
       </div>
     </div>
@@ -273,20 +179,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   <!-- 複層 -->
   <div id="cat-moso" class="cat-content">
     <div class="tip-box">複層ガラスは全て受注生産品です。納期がかかることを必ずお客様へお伝えください。片側だけの修理は不可です。</div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e8f5f0 0%,#c8e8d8 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <!-- ペアガラス断面図 -->
-          <rect x="25" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="45" y="20" width="110" height="80" rx="0" fill="rgba(200,235,245,0.3)" stroke="none"/>
-          <!-- 空気層の矢印 -->
-          <line x1="100" y1="40" x2="100" y2="80" stroke="#3a8060" stroke-width="1" stroke-dasharray="3,2"/>
-          <text x="100" y="63" text-anchor="middle" font-size="9" fill="#3a8060" font-family="sans-serif">空気層</text>
-          <rect x="155" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <text x="100" y="110" text-anchor="middle" font-size="9" fill="#2a6040" font-family="sans-serif">断熱性能：一枚の約2倍</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-pair" src="" alt="ペアマルチ"></div>
       <div class="pcard-body">
         <div class="badge badge-red">受注生産</div>
         <div class="pcard-title">一般複層ガラス（ペアマルチ）</div>
@@ -294,26 +188,12 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         <div class="pcard-specs">
           <div class="spec-chip">主な構成 <strong>3mm+A+3mm 他</strong></div>
           <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
-          <div class="spec-chip">最大 <strong>2,418×1,885mm</strong></div>
           <div class="spec-chip">断熱 <strong>一枚の約2倍</strong></div>
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e0f0f8 0%,#b8d8f0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="25" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- 真空層（点線） -->
-          <rect x="45" y="20" width="110" height="80" fill="rgba(220,240,255,0.15)" stroke="#4a90b0" stroke-width="0.5" stroke-dasharray="2,2"/>
-          <text x="100" y="55" text-anchor="middle" font-size="9" fill="#2a5080" font-family="sans-serif">真空層</text>
-          <text x="100" y="68" text-anchor="middle" font-size="9" fill="#2a5080" font-family="sans-serif">0.2mm</text>
-          <rect x="155" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- Low-E膜表現 -->
-          <line x1="155" y1="20" x2="155" y2="100" stroke="#f0d020" stroke-width="2" opacity="0.8"/>
-          <text x="100" y="108" text-anchor="middle" font-size="9" fill="#2a5080" font-family="sans-serif">断熱性能：一枚の約4倍　薄さ6.2mm</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-spaceia" src="" alt="スペーシア"></div>
       <div class="pcard-body">
         <div class="badge badge-red">受注生産</div>
         <div class="pcard-title">真空ガラス（スペーシア）</div>
@@ -321,7 +201,6 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         <div class="pcard-specs">
           <div class="spec-chip">厚み <strong>6.2mm</strong></div>
           <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
-          <div class="spec-chip">最大 <strong>2,400×1,500mm</strong></div>
           <div class="spec-chip">断熱 <strong>一枚の約4倍</strong></div>
         </div>
       </div>
@@ -331,23 +210,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   <!-- Low-E -->
   <div id="cat-lowe" class="cat-content">
     <div class="tip-box">全て受注生産品。「南面→日射取得型（スーパー/EA）」「西面→日射遮蔽型（レイボーグ）」が基本の使い分けです。</div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#fff8e0 0%,#ffe8a0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="25" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="45" y="20" width="110" height="80" fill="rgba(255,240,200,0.2)"/>
-          <rect x="155" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- Low-E膜（室内側） -->
-          <line x1="155" y1="20" x2="155" y2="100" stroke="#f0a020" stroke-width="3" opacity="0.9"/>
-          <!-- 太陽熱の矢印（入ってくる） -->
-          <line x1="20" y1="50" x2="160" y2="50" stroke="#f0c040" stroke-width="2" marker-end="url(#arr)"/>
-          <!-- 暖房熱の矢印（反射） -->
-          <line x1="158" y1="65" x2="100" y2="65" stroke="#e05020" stroke-width="1.5" stroke-dasharray="4,2"/>
-          <text x="75" y="62" font-size="8" fill="#c04010" font-family="sans-serif">暖房熱を反射</text>
-          <text x="100" y="108" text-anchor="middle" font-size="9" fill="#805010" font-family="sans-serif">日射取得型（冬向き）断熱3.3倍</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-lowe-s" src="" alt="ペアマルチスーパー"></div>
       <div class="pcard-body">
         <div class="badge badge-green">断熱重視</div>
         <div class="pcard-title">ペアマルチスーパー（日射取得型）</div>
@@ -355,52 +219,25 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         <div class="pcard-specs">
           <div class="spec-chip">主な構成 <strong>3mm透明+A+LowE3</strong></div>
           <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
-          <div class="spec-chip">色 <strong>クリアS / グリーンS</strong></div>
           <div class="spec-chip">断熱 <strong>一枚の約3.3倍</strong></div>
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e0f0e8 0%,#a8d8b8 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="25" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="45" y="20" width="110" height="80" fill="rgba(180,230,200,0.2)"/>
-          <rect x="155" y="20" width="15" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- Low-E膜（室外側） -->
-          <line x1="40" y1="20" x2="40" y2="100" stroke="#20a050" stroke-width="3" opacity="0.9"/>
-          <!-- 太陽熱の矢印（ブロック） -->
-          <line x1="15" y1="50" x2="38" y2="50" stroke="#f0c040" stroke-width="2"/>
-          <line x1="40" y1="45" x2="18" y2="55" stroke="#f0c040" stroke-width="1.5"/>
-          <text x="20" y="42" font-size="7" fill="#b08010" font-family="sans-serif">日射60%カット</text>
-          <text x="100" y="108" text-anchor="middle" font-size="9" fill="#206040" font-family="sans-serif">日射遮蔽型（夏向き）遮熱5倍</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-lowe-r" src="" alt="ペアマルチレイボーグ"></div>
       <div class="pcard-body">
         <div class="badge badge-orange">遮熱重視</div>
         <div class="pcard-title">ペアマルチレイボーグ（日射遮蔽型）</div>
-        <div class="pcard-sub">室外側Low-E膜。日射熱を約60%カット。遮熱性能は一枚の約5倍。夏冬両対応。注意：冬の日差しも遮断してしまうため南面には不向き。</div>
+        <div class="pcard-sub">室外側Low-E膜。日射熱を約60%カット。遮熱性能は一枚の約5倍。夏冬両対応。注意：冬の日差しも遮断するため南面には不向き。</div>
         <div class="pcard-specs">
           <div class="spec-chip">主な構成 <strong>LowE3+A+3mm透明</strong></div>
           <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
-          <div class="spec-chip">色 <strong>グリーンS</strong></div>
           <div class="spec-chip">遮熱 <strong>一枚の約5倍</strong></div>
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e8f0f8 0%,#c8d8f0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="20" y="20" width="12" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="37" y="20" width="126" height="80" fill="rgba(200,220,240,0.2)"/>
-          <rect x="168" y="20" width="12" height="80" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <line x1="32" y1="20" x2="32" y2="100" stroke="#4060c0" stroke-width="2.5" opacity="0.8"/>
-          <text x="100" y="58" text-anchor="middle" font-size="10" fill="#203060" font-family="sans-serif" font-weight="bold">ペアマルチEA</text>
-          <text x="100" y="73" text-anchor="middle" font-size="9" fill="#304080" font-family="sans-serif">大寸法対応</text>
-          <text x="100" y="108" text-anchor="middle" font-size="9" fill="#304080" font-family="sans-serif">12mm+12mmまで製作可能</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-lowe-s2" src="" alt="ペアマルチEA"></div>
       <div class="pcard-body">
         <div class="badge badge-blue">大寸法対応</div>
         <div class="pcard-title">ペアマルチEA（日射取得型）</div>
@@ -408,7 +245,6 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         <div class="pcard-specs">
           <div class="spec-chip">主な構成 <strong>LowE3+A+3mm透明</strong></div>
           <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
-          <div class="spec-chip">色 <strong>クリア系</strong></div>
           <div class="spec-chip">断熱 <strong>一枚の約3.1倍</strong></div>
         </div>
       </div>
@@ -418,22 +254,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   <!-- 機能・特殊 -->
   <div id="cat-kino" class="cat-content">
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#f0e8e8 0%,#d8c0c0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <!-- 防犯ガラス断面：中間膜 -->
-          <rect x="25" y="25" width="18" height="70" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="48" y="25" width="14" height="70" rx="0" fill="rgba(230,180,180,0.7)" stroke="#c06060" stroke-width="1"/>
-          <text x="55" y="64" text-anchor="middle" font-size="7" fill="#803030" font-family="sans-serif" transform="rotate(-90,55,64)">中間膜</text>
-          <rect x="67" y="25" width="18" height="70" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- バール -->
-          <line x1="130" y1="20" x2="160" y2="50" stroke="#555" stroke-width="4" stroke-linecap="round"/>
-          <line x1="155" y1="45" x2="165" y2="35" stroke="#555" stroke-width="3" stroke-linecap="round"/>
-          <!-- バツ印 -->
-          <line x1="95" y1="50" x2="175" y2="90" stroke="#e03030" stroke-width="3" opacity="0.7"/>
-          <line x1="175" y1="50" x2="95" y2="90" stroke="#e03030" stroke-width="3" opacity="0.7"/>
-          <text x="100" y="108" text-anchor="middle" font-size="9" fill="#802020" font-family="sans-serif">こじ破り・打ち破りを防止</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-secuo" src="" alt="セキュオ"></div>
       <div class="pcard-body">
         <div class="badge badge-red">受注生産 CP認定品</div>
         <div class="pcard-title">防犯ガラス（セキュオ）</div>
@@ -445,21 +266,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#f8f0f8 0%,#e0c8e0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="25" y="25" width="18" height="70" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="48" y="25" width="14" height="70" rx="0" fill="rgba(220,180,220,0.7)" stroke="#a060a0" stroke-width="1"/>
-          <text x="55" y="64" text-anchor="middle" font-size="7" fill="#602060" font-family="sans-serif" transform="rotate(-90,55,64)">中間膜</text>
-          <rect x="67" y="25" width="18" height="70" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- UV遮断 -->
-          <text x="130" y="50" text-anchor="middle" font-size="22" fill="#f0c040" font-family="sans-serif">☀</text>
-          <line x1="130" y1="60" x2="130" y2="95" stroke="#e03030" stroke-width="2"/>
-          <line x1="118" y1="72" x2="142" y2="72" stroke="#e03030" stroke-width="2"/>
-          <text x="130" y="108" text-anchor="middle" font-size="8" fill="#602060" font-family="sans-serif">UV99%カット・飛散防止</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-lami" src="" alt="ラミペーン"></div>
       <div class="pcard-body">
         <div class="badge badge-red">受注生産</div>
         <div class="pcard-title">合わせガラス（ラミペーン）</div>
@@ -471,24 +279,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#e8f0f8 0%,#c0d0e8 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <rect x="25" y="25" width="18" height="70" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <rect x="48" y="25" width="14" height="70" rx="0" fill="rgba(180,210,230,0.7)" stroke="#6090b0" stroke-width="1"/>
-          <rect x="67" y="25" width="18" height="70" rx="2" fill="rgba(160,210,230,0.6)" stroke="#4a90b0" stroke-width="1.5"/>
-          <!-- 音波 -->
-          <g stroke="#4080c0" stroke-width="1.5" fill="none" opacity="0.7">
-            <path d="M 110 45 Q 125 60 110 75"/>
-            <path d="M 120 38 Q 142 60 120 82"/>
-            <path d="M 130 32 Q 158 60 130 88"/>
-          </g>
-          <line x1="100" y1="45" x2="100" y2="75" stroke="#e03030" stroke-width="2"/>
-          <line x1="90" y1="55" x2="110" y2="65" stroke="#e03030" stroke-width="2"/>
-          <text x="100" y="108" text-anchor="middle" font-size="9" fill="#204060" font-family="sans-serif">外部騒音を大幅カット　6.8mm薄型</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-sono" src="" alt="ソノグラス"></div>
       <div class="pcard-body">
         <div class="badge badge-red">受注生産</div>
         <div class="pcard-title">防音ガラス（ソノグラス）</div>
@@ -506,20 +298,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   <div id="cat-kagami" class="cat-content">
     <div class="tip-box">洗面所→TED（簡易防湿）、浴室→OC（防湿）が基本の使い分けです。「曇らない鏡」は存在しないので「防曇鏡」を案内してください。</div>
     <div class="pcard">
-      <div class="pcard-img" style="background:linear-gradient(135deg,#f0f0f0 0%,#d0d8e0 100%)">
-        <svg width="200" height="120" viewBox="0 0 200 120" xmlns="http://www.w3.org/2000/svg">
-          <defs><linearGradient id="mirrorGrad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#e8f0f8"/><stop offset="40%" style="stop-color:#ffffff"/><stop offset="70%" style="stop-color:#d0d8e0"/><stop offset="100%" style="stop-color:#b8c8d8"/></linearGradient></defs>
-          <rect x="40" y="10" width="120" height="90" rx="4" fill="url(#mirrorGrad)" stroke="#8090a0" stroke-width="1.5"/>
-          <!-- 映り込み -->
-          <ellipse cx="90" cy="45" rx="20" ry="25" fill="rgba(180,200,220,0.3)" stroke="rgba(100,130,160,0.3)" stroke-width="1"/>
-          <ellipse cx="130" cy="55" rx="12" ry="15" fill="rgba(180,200,220,0.2)"/>
-          <line x1="40" y1="10" x2="160" y2="100" stroke="rgba(255,255,255,0.5)" stroke-width="12"/>
-          <!-- 構造説明 -->
-          <rect x="40" y="100" width="120" height="4" fill="#c0a060" opacity="0.6"/>
-          <rect x="40" y="104" width="120" height="3" fill="#909090" opacity="0.5"/>
-          <text x="100" y="116" text-anchor="middle" font-size="8" fill="#404040" font-family="sans-serif">銀膜→銅膜→保護塗料の構造</text>
-        </svg>
-      </div>
+      <div class="pcard-img contain"><img id="img-mirror" src="" alt="鏡の構造"></div>
       <div class="pcard-body">
         <div class="pcard-title">鏡（5mm・各仕上げ）</div>
         <div class="pcard-sub">フロートガラスの片面に銀膜を塗布。湿気で黒く変色するため水回りには防湿加工品を使用。</div>
@@ -533,10 +312,17 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
+    <div class="pcard">
+      <div class="pcard-img contain"><img id="img-mirror-ted" src="" alt="防湿加工比較"></div>
+      <div class="pcard-body">
+        <div class="pcard-title">防湿加工の比較（TED vs 無加工）</div>
+        <div class="pcard-sub">左：防湿加工なし　右：TED加工。水回りでは防湿加工品を必ず使用してください。</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ===== PAGE: 見積もり ===== -->
+<!-- 見積もり -->
 <div id="p-estimate" class="page">
   <div class="page-inner">
     <div class="tip-box">【単板ガラス修理】お客様宅へ伺う場合の見積もり計算機</div>
@@ -593,8 +379,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   </div>
 </div>
 
-</div><!-- /content -->
-
+</div>
 <nav class="main-nav">
   <div class="main-indicator" id="main-ind"></div>
   <button class="mnav-btn active" onclick="showPage('p-catalog',0)">
@@ -606,7 +391,34 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
 </nav>
 </div>
 
+<script src="imgs.js"></script>
 <script>
+// 画像をIMGSからセット
+window.addEventListener('load', () => {
+  const map = {
+    'img-float':   IMGS.float,
+    'img-kata':    IMGS.kata,
+    'img-suri':    IMGS.suri,
+    'img-ami-t':   IMGS.ami_t,
+    'img-ami-k':   IMGS.ami_k,
+    'img-kyoka':   IMGS.kyoka,
+    'img-pair':    IMGS.pair,
+    'img-spaceia': IMGS.spaceia,
+    'img-lowe-s':  IMGS.lowe_s,
+    'img-lowe-r':  IMGS.lowe_r,
+    'img-lowe-s2': IMGS.lowe_s,
+    'img-secuo':   IMGS.secuo,
+    'img-lami':    IMGS.lami,
+    'img-sono':    IMGS.sonoglass,
+    'img-mirror':  IMGS.mirror,
+    'img-mirror-ted': IMGS.mirror_ted,
+  };
+  Object.entries(map).forEach(([id, src]) => {
+    const el = document.getElementById(id);
+    if (el) el.src = src;
+  });
+});
+
 const stockData={
   fl3:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[1300,1300,1400,1800,2700],[1300,1300,2000,2700,4100],[1400,2000,4100,5400,8100],[1800,2700,5400,7200,10800],[2700,4100,8100,10800,16300]]},
   fl2:{cols:[303,455,813],rows:[303,455,914],prices:[[1500,1500,1500],[1500,1500,1500],[1500,1500,2900]]},
@@ -618,7 +430,6 @@ const stockData={
 };
 const travelTbl=[[5,1000],[10,2000],[15,2000],[20,2000],[25,4000],[30,4000],[35,4000],[40,6000],[45,6000],[50,6000],[55,8000],[60,8000],[65,10000],[70,10000],[75,10000],[80,10000],[85,12000],[90,12000]];
 const workTbl=[[15,2000],[30,2000],[45,3000],[60,4000],[75,5000],[95,6000],[110,7000],[120,8000]];
-
 function lookup(tbl,val){for(let i=0;i<tbl.length;i++)if(val<=tbl[i][0])return tbl[i][1];return null;}
 function findIdx(arr,val){for(let i=0;i<arr.length;i++)if(val<=arr[i])return i;return -1;}
 function fmt(n){return n!=null?'¥'+n.toLocaleString():'—';}
