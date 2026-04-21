@@ -35,10 +35,10 @@ nav.main-nav{height:54px;background:var(--surface);border-top:1px solid var(--bo
 .cat-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
 .cat-content{display:none;padding:0 14px 14px}
 .cat-content.active{display:block}
-.pcard{background:var(--surface);border-radius:14px;margin-bottom:12px;border:1px solid var(--border);overflow:hidden}
-.pcard-img{width:100%;height:160px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--surface2)}
-.pcard-img img{width:100%;height:100%;object-fit:cover}
-.pcard-img.contain img{object-fit:contain;padding:8px}
+.pcard{background:var(--surface);border-radius:14px;margin-bottom:12px;border:1px solid var(--border);overflow:hidden;max-width:100%}
+.pcard-img{width:100%;height:160px;overflow:hidden;display:flex;align-items:center;justify-content:center;background:var(--surface2);max-width:100%}
+.pcard-img img{width:100%;height:160px;object-fit:cover;display:block;max-width:100%}
+.pcard-img.contain img{object-fit:contain;height:160px;padding:8px}
 .pcard-body{padding:12px 14px}
 .pcard-title{font-size:13px;font-weight:700;margin-bottom:3px}
 .pcard-sub{font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:10px}
