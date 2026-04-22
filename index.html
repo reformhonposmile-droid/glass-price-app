@@ -137,27 +137,33 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       </div>
     </div>
     <div class="pcard">
-      <div class="pcard-img"><img id="img-ami-t" src="" alt="網入りガラス透明"></div>
-      <div class="pcard-body">
-        <div class="pcard-title">網入りガラス 透明（PW6.8）</div>
-        <div class="pcard-sub">防火・飛散防止性能あり。法規上定められた箇所に使用義務。直射日光で熱割れに注意。発注時は網の形状を必ず記載。透明は型より高め。</div>
-        <div class="pcard-specs">
-          <div class="spec-chip">厚み <strong>6.8mm</strong></div>
-          <div class="spec-chip">発注先 <strong>AGC硝子建材</strong></div>
-          <div class="spec-chip">最大 <strong>2,438×1,829mm</strong></div>
-          <div class="spec-chip">網形状 <strong>菱形・クロス・線入り</strong></div>
+      <div class="pcard-body" style="padding-bottom:8px">
+        <div class="pcard-title">網入りガラス（PW6.8 / FW6.8）</div>
+        <div class="pcard-sub">防火・飛散防止性能あり。法規上定められた箇所に使用義務。直射日光で熱割れに注意。<strong>発注時は網の形状を必ず記載。</strong>透明は型より高め。</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;border-top:1px solid var(--border)">
+        <div style="text-align:center;padding:8px 6px;border-right:1px solid var(--border)">
+          <img id="img-wire-hishi" src="" alt="菱形ワイヤー" style="width:100%;height:70px;object-fit:cover;display:block;border-radius:4px">
+          <div style="font-size:10px;font-weight:700;color:var(--text);margin-top:5px">菱形ワイヤー</div>
+          <div style="font-size:9px;color:var(--green);margin-top:2px">防火○</div>
+        </div>
+        <div style="text-align:center;padding:8px 6px;border-right:1px solid var(--border)">
+          <img id="img-wire-cross" src="" alt="クロスワイヤー" style="width:100%;height:70px;object-fit:cover;display:block;border-radius:4px">
+          <div style="font-size:10px;font-weight:700;color:var(--text);margin-top:5px">クロスワイヤー</div>
+          <div style="font-size:9px;color:var(--green);margin-top:2px">防火○</div>
+        </div>
+        <div style="text-align:center;padding:8px 6px">
+          <img id="img-wire-line" src="" alt="線入りワイヤー" style="width:100%;height:70px;object-fit:cover;display:block;border-radius:4px">
+          <div style="font-size:10px;font-weight:700;color:var(--text);margin-top:5px">線入りワイヤー</div>
+          <div style="font-size:9px;color:var(--accent2);margin-top:2px">防火×</div>
         </div>
       </div>
-    </div>
-    <div class="pcard">
-      <div class="pcard-img"><img id="img-ami-k" src="" alt="網入りガラス型"></div>
-      <div class="pcard-body">
-        <div class="pcard-title">網入りガラス 型（FW6.8）</div>
-        <div class="pcard-sub">デコボコ＋ワイヤー入り。透明より安価。防火性能あり。</div>
+      <div class="pcard-body" style="padding-top:10px">
         <div class="pcard-specs">
           <div class="spec-chip">厚み <strong>6.8mm</strong></div>
           <div class="spec-chip">発注先 <strong>AGC硝子建材</strong></div>
           <div class="spec-chip">最大 <strong>2,438×1,829mm</strong></div>
+          <div class="spec-chip">型（FW6.8） <strong>透明より安価</strong></div>
         </div>
       </div>
     </div>
@@ -399,8 +405,9 @@ window.addEventListener('load', () => {
     'img-float':   IMGS.float,
     'img-kata':    IMGS.kata,
     'img-suri':    IMGS.suri,
-    'img-ami-t':   IMGS.ami_t,
-    'img-ami-k':   IMGS.ami_k,
+    'img-wire-hishi': IMGS.wire_hishi,
+    'img-wire-cross':  IMGS.wire_cross,
+    'img-wire-line':   IMGS.wire_line,
     'img-kyoka':   IMGS.kyoka,
     'img-pair':    IMGS.pair,
     'img-spaceia': IMGS.spaceia,
