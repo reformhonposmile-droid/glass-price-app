@@ -336,7 +336,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
     <div class="esec" id="sec-shaku">
       <div class="esec-title"><span class="num">①</span>ガラス代（在庫・尺寸出し）</div>
       <div class="cgrp"><div class="clbl">品種</div>
-        <select id="e-type" onchange="calcEst()">
+        <select id="e-type" onchange="clearSqm();calcEst();">
           <optgroup label="── 単板ガラス ──">
             <option value="fl3">3mm透明（FL3）</option>
             <option value="fl2">2mm透明（FL2）</option>
@@ -347,23 +347,15 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
             <option value="g2">2mm摺（G2）</option>
           </optgroup>
           <optgroup label="── 網入りガラス ──">
-            <option value="ami_t_606">6.8mm網入り透明 〜606</option>
-            <option value="ami_t_914">6.8mm網入り透明 〜914</option>
-            <option value="ami_t_1219">6.8mm網入り透明 〜1219</option>
-            <option value="ami_t_1829">6.8mm網入り透明 〜1829</option>
-            <option value="ami_t_2438">6.8mm網入り透明 〜2438</option>
-            <option value="ami_k_606">6.8mm網入り型 〜606</option>
-            <option value="ami_k_914">6.8mm網入り型 〜914</option>
-            <option value="ami_k_1219">6.8mm網入り型 〜1219</option>
-            <option value="ami_k_1829">6.8mm網入り型 〜1829</option>
-            <option value="ami_k_2438">6.8mm網入り型 〜2438</option>
+            <option value="ami_t">6.8mm網入り透明（PW6.8）</option>
+            <option value="ami_k">6.8mm網入り型（FW6.8）</option>
           </optgroup>
         </select>
       </div>
       <div class="cgrp">
         <div class="irow">
-          <div><div class="clbl">W（幅）mm</div><input type="number" id="e-w" value="800" min="1" inputmode="numeric" oninput="calcEst()"></div>
-          <div><div class="clbl">H（高さ）mm</div><input type="number" id="e-h" value="800" min="1" inputmode="numeric" oninput="calcEst()"></div>
+          <div><div class="clbl">W（幅）mm</div><input type="number" id="e-w" value="800" min="1" inputmode="numeric" oninput="clearSqm();calcEst();"></div>
+          <div><div class="clbl">H（高さ）mm</div><input type="number" id="e-h" value="800" min="1" inputmode="numeric" oninput="clearSqm();calcEst();"></div>
         </div>
       </div>
       <div class="esec-note">適用範囲：<span id="e-glass-range">—</span>　→　<strong id="e-glass-price">—</strong></div>
@@ -610,9 +602,6 @@ function calcEst(){
   const wMin=parseInt(document.getElementById('e-work').value)||0;
   const waste=parseInt(document.getElementById('e-waste').value)||1;
 
-  // ①を有効化・②を無効化
-  setActiveSection('shaku');
-
   let price=null,range='—';
   if(type.startsWith('ami_t')){
     const r=getAmiPrice('ami_t',w,h);price=r.price;range=r.range;
@@ -628,7 +617,6 @@ function calcEst(){
   document.getElementById('e-travel-price').textContent=fmt(tp);
   document.getElementById('e-work-price').textContent=fmt(wp);
   document.getElementById('b-glass').textContent=fmt(price);
-  document.getElementById('b-order').textContent='—';
   document.getElementById('b-travel').textContent=fmt(tp);
   document.getElementById('b-work').textContent=fmt(wp);
 
@@ -640,20 +628,28 @@ function setActiveSection(which){
   const s1=document.getElementById('sec-shaku');
   const s2=document.getElementById('sec-sqm');
   if(which==='shaku'){
-    s1.classList.remove('disabled');s1.style.opacity='1';
+    s1.classList.remove('disabled');s1.style.opacity='1';s1.style.pointerEvents='auto';
     s2.classList.add('disabled');s2.style.opacity='0.4';s2.style.pointerEvents='none';
   } else {
-    s2.classList.remove('disabled');s2.style.opacity='1';
+    s2.classList.remove('disabled');s2.style.opacity='1';s2.style.pointerEvents='auto';
     s1.classList.add('disabled');s1.style.opacity='0.4';s1.style.pointerEvents='none';
   }
 }
 
 function clearShaku(){
-  // ②を選んだとき①をリセット
+  // ②を選んだとき①をリセット＆グレーアウト
   setActiveSection('sqm');
   document.getElementById('b-glass').textContent='—';
   document.getElementById('e-glass-range').textContent='—';
   document.getElementById('e-glass-price').textContent='—';
+}
+
+function clearSqm(){
+  // ①を選んだとき②をリセット＆グレーアウト
+  setActiveSection('shaku');
+  document.getElementById('b-order').textContent='—';
+  document.getElementById('o-unit').textContent='—';
+  document.getElementById('o-total-price').textContent='—';
 }
 
 function updateWasteUI(waste){
@@ -865,10 +861,10 @@ function calcTravel(){
   recalcTotal();
 }
 // 初期状態：両セクションを有効に
-document.getElementById('sec-shaku').style.opacity='1';
-document.getElementById('sec-shaku').style.pointerEvents='auto';
-document.getElementById('sec-sqm').style.opacity='1';
-document.getElementById('sec-sqm').style.pointerEvents='auto';
+const _s1=document.getElementById('sec-shaku');
+const _s2=document.getElementById('sec-sqm');
+_s1.style.opacity='1';_s1.style.pointerEvents='auto';_s1.classList.remove('disabled');
+_s2.style.opacity='1';_s2.style.pointerEvents='auto';_s2.classList.remove('disabled');
 calcEst();calcOrder();recalcTotal();
 const n=document.querySelectorAll('.mnav-btn').length;
 const ind=document.getElementById('main-ind');
