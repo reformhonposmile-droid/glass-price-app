@@ -333,17 +333,31 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
   <div class="page-inner">
     <div class="tip-box">【単板ガラス修理】お客様宅へ伺う場合の見積もり計算機</div>
 
-    <div class="esec">
+    <div class="esec" id="sec-shaku">
       <div class="esec-title"><span class="num">①</span>ガラス代（在庫・尺寸出し）</div>
       <div class="cgrp"><div class="clbl">品種</div>
         <select id="e-type" onchange="calcEst()">
-          <option value="fl3">3mm透明（FL3）</option>
-          <option value="fl2">2mm透明（FL2）</option>
-          <option value="fl5">5mm透明（FL5）</option>
-          <option value="f4a">4mm型（F4A）</option>
-          <option value="polka">2mmポリカ型</option>
-          <option value="g3">3mm摺（G3）</option>
-          <option value="g2">2mm摺（G2）</option>
+          <optgroup label="── 単板ガラス ──">
+            <option value="fl3">3mm透明（FL3）</option>
+            <option value="fl2">2mm透明（FL2）</option>
+            <option value="fl5">5mm透明（FL5）</option>
+            <option value="f4a">4mm型（F4A）</option>
+            <option value="polka">2mmポリカ型</option>
+            <option value="g3">3mm摺（G3）</option>
+            <option value="g2">2mm摺（G2）</option>
+          </optgroup>
+          <optgroup label="── 網入りガラス ──">
+            <option value="ami_t_606">6.8mm網入り透明 〜606</option>
+            <option value="ami_t_914">6.8mm網入り透明 〜914</option>
+            <option value="ami_t_1219">6.8mm網入り透明 〜1219</option>
+            <option value="ami_t_1829">6.8mm網入り透明 〜1829</option>
+            <option value="ami_t_2438">6.8mm網入り透明 〜2438</option>
+            <option value="ami_k_606">6.8mm網入り型 〜606</option>
+            <option value="ami_k_914">6.8mm網入り型 〜914</option>
+            <option value="ami_k_1219">6.8mm網入り型 〜1219</option>
+            <option value="ami_k_1829">6.8mm網入り型 〜1829</option>
+            <option value="ami_k_2438">6.8mm網入り型 〜2438</option>
+          </optgroup>
         </select>
       </div>
       <div class="cgrp">
@@ -355,7 +369,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       <div class="esec-note">適用範囲：<span id="e-glass-range">—</span>　→　<strong id="e-glass-price">—</strong></div>
     </div>
 
-    <div class="esec">
+    <div class="esec" id="sec-sqm">
       <div class="esec-title"><span class="num">②</span>ガラス代（仕入れ・㎡出し）</div>
       <div class="cgrp"><div class="clbl">品種</div>
         <select id="o-type" onchange="calcOrder()">
@@ -449,16 +463,17 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       <div class="esec-title"><span class="num">③</span>出張・施工費</div>
       <div class="cgrp">
         <div class="irow">
-          <div><div class="clbl">片道（分）</div><input type="number" id="e-travel" value="20" min="1" max="90" inputmode="numeric" oninput="calcEst()"></div>
-          <div><div class="clbl">施工時間（分）</div><input type="number" id="e-work" value="30" min="1" inputmode="numeric" oninput="calcEst()"></div>
+          <div><div class="clbl">片道（分）</div><input type="number" id="e-travel" value="20" min="1" max="90" inputmode="numeric" oninput="calcTravel();"></div>
+          <div><div class="clbl">施工時間（分）</div><input type="number" id="e-work" value="30" min="1" inputmode="numeric" oninput="calcTravel();"></div>
         </div>
       </div>
       <div class="esec-note">出張費：<strong id="e-travel-price">—</strong>　／　施工費：<strong id="e-work-price">—</strong></div>
     </div>
     <div class="esec">
       <div class="esec-title"><span class="num">④</span>廃材搬出・処分費</div>
-      <div class="cgrp"><div class="clbl">枚数</div><input type="number" id="e-waste" value="1" min="1" max="20" inputmode="numeric" oninput="calcEst()"></div>
-      <div class="esec-note">処分費：<strong id="e-waste-price">—</strong>　（3枚まで500円、4枚目から+100円/枚）</div>
+      <div class="cgrp"><div class="clbl">枚数</div><input type="number" id="e-waste" value="1" min="1" max="20" inputmode="numeric" oninput="const w=parseInt(this.value)||1;updateWasteUI(w);recalcTotal();"></div>
+      <div id="waste-rule-tanban" class="esec-note">処分費：<strong id="e-waste-price">—</strong>　（3枚まで500円、4枚目から+100円/枚）</div>
+      <div id="waste-rule-kino" class="esec-note" style="display:none">処分費：<strong id="e-waste-price-kino">—</strong>　（300円/枚）</div>
     </div>
     <div class="bdown">
       <div class="brow"><span class="lbl">①ガラス代（尺寸）</span><span class="amt" id="b-glass">—</span></div>
@@ -474,7 +489,10 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       <div class="price" id="e-total">—</div>
       <div class="sub" id="e-tax">税込：—</div>
     </div>
-    <div class="note-green">※施工時間が2時間を超える場合は日分割計算で算出してください。<br>（例）2時間半かかる場合 → ¥12,000〜<br>※①と②のどちらか使用する方だけ入力してください。</div>
+    <div class="note-green">※施工時間が2時間を超える場合は日分割計算で算出してください。<br>（例）2時間半かかる場合 → ¥12,000〜</div>
+    <div style="background:#fff0e0;border:1px solid #f0a040;border-radius:10px;padding:10px 12px;font-size:11px;color:#7c3000;line-height:1.6;margin-top:10px" id="kino-note" style="display:none">
+      ⚠️ 機能ガラスの場合：廃材処分費300円/枚・メーカー配送料6,000円（在庫使用の場合は不要）・諸経費5%（最低2,000円）
+    </div>
   </div>
 </div>
 
@@ -526,7 +544,19 @@ const stockData={
   f4a:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[2100,2100,2200,2900,4400],[2100,2100,3300,4400,6600],[2200,3300,6600,8900,13300],[2900,4400,8900,11800,17700],[4400,6600,13300,17700,26600]]},
   polka:{cols:[303,455,914],rows:[303,455,914],prices:[[3000,3000,3600],[3000,3000,5400],[4000,6000,6000]]},
   g3:{cols:[303,455,914,1219,1829],rows:[303,455,914,1219,1829],prices:[[4200,4200,4900,6500,9800],[4200,4200,7400,9800,14700],[4900,7400,14800,19700,29600],[6500,9800,19700,26300,39500],[9800,14700,29600,39500,59200]]},
-  g2:{cols:[303,455,813],rows:[303,455,914],prices:[[1600,1600,1600],[1600,1600,1600],[1600,1600,3200]]}
+  g2:{cols:[303,455,813],rows:[303,455,914],prices:[[1600,1600,1600],[1600,1600,1600],[1600,1600,3200]]},
+  // 網入りガラス（W幅別の固定価格）
+  ami_t_606:{fixed:null},ami_t_914:{fixed:null},
+  ami_t_1219:{fixed:20000},ami_t_1829:{fixed:29900},ami_t_2438:{fixed:39900},
+  ami_k_606:{fixed:null},ami_k_914:{fixed:null},
+  ami_k_1219:{fixed:11100},ami_k_1829:{fixed:16600},ami_k_2438:{fixed:22200},
+};
+// 網入り価格テーブル（H×W）
+const amiTData={
+  ami_t:{cols:[606,914,1219,1829,2438],rows:[606,914,1219,1829,2438],
+    prices:[[null,9900,20000,29900,39900],[null,22600,30100,45200,60200],[20000,30100,40100,60200,80300],[29900,45200,60200,90300,120400],[39900,60200,80300,120400,null]]},
+  ami_k:{cols:[606,914,1219,1829,2438],rows:[606,914,1219,1829,2438],
+    prices:[[null,5500,11100,16600,22200],[null,12500,16700,25100,33400],[11100,16700,22300,33500,44600],[16600,25100,33500,50200,66900],[22200,33400,44600,66900,null]]},
 };
 const travelTbl=[[5,1000],[10,2000],[15,2000],[20,2000],[25,4000],[30,4000],[35,4000],[40,6000],[45,6000],[50,6000],[55,8000],[60,8000],[65,10000],[70,10000],[75,10000],[80,10000],[85,12000],[90,12000]];
 const workTbl=[[15,2000],[30,2000],[45,3000],[60,4000],[75,5000],[95,6000],[110,7000],[120,8000]];
@@ -542,6 +572,36 @@ function getGlass(type,w,h){
   const hl=ri===0?`H≤${d.rows[0]}`:`H${d.rows[ri-1]+1}〜${d.rows[ri]}`;
   return{price:p,range:`${wl}mm / ${hl}mm`};
 }
+// 単板ガラス判定（透明・型・摺 → 単板、それ以外 → 機能）
+const tanbanTypes=['fl3','fl2','fl5','f4a','polka','g3','g2'];
+const tanbanOrderTypes=['fl3','fl5','fl6','fl8','f4a_m','f6a','g3_m','g5'];
+
+function isKino(){
+  // ①が有効なら①の品種で判定、②が有効なら②の品種で判定
+  const shakuActive=!document.getElementById('sec-shaku').classList.contains('disabled');
+  const sqmActive=!document.getElementById('sec-sqm').classList.contains('disabled');
+  const shakuVal=document.getElementById('e-type').value;
+  const sqmVal=document.getElementById('o-type').value;
+  if(shakuActive&&document.getElementById('b-glass').textContent!=='—'){
+    return !tanbanTypes.includes(shakuVal);
+  }
+  if(sqmActive&&document.getElementById('b-order').textContent!=='—'){
+    return !tanbanOrderTypes.includes(sqmVal);
+  }
+  return false;
+}
+
+function getAmiPrice(typeBase, w, h){
+  const d=amiTData[typeBase];
+  if(!d) return{price:null,range:'データなし'};
+  const ci=findIdx(d.cols,w),ri=findIdx(d.rows,h);
+  if(ci<0||ri<0) return{price:null,range:'範囲外'};
+  const p=d.prices[ri][ci];
+  if(p==null) return{price:null,range:'該当なし'};
+  const wl=`W≤${d.cols[ci]}mm`,hl=`H≤${d.rows[ri]}mm`;
+  return{price:p,range:`${wl} / ${hl}`};
+}
+
 function calcEst(){
   const type=document.getElementById('e-type').value;
   const w=parseInt(document.getElementById('e-w').value)||0;
@@ -549,32 +609,81 @@ function calcEst(){
   const tMin=parseInt(document.getElementById('e-travel').value)||0;
   const wMin=parseInt(document.getElementById('e-work').value)||0;
   const waste=parseInt(document.getElementById('e-waste').value)||1;
-  const g=getGlass(type,w,h);
-  document.getElementById('e-glass-range').textContent=g.range;
-  document.getElementById('e-glass-price').textContent=fmt(g.price);
+
+  // ①を有効化・②を無効化
+  setActiveSection('shaku');
+
+  let price=null,range='—';
+  if(type.startsWith('ami_t')){
+    const r=getAmiPrice('ami_t',w,h);price=r.price;range=r.range;
+  } else if(type.startsWith('ami_k')){
+    const r=getAmiPrice('ami_k',w,h);price=r.price;range=r.range;
+  } else {
+    const g=getGlass(type,w,h);price=g.price;range=g.range;
+  }
+  document.getElementById('e-glass-range').textContent=range;
+  document.getElementById('e-glass-price').textContent=fmt(price);
+
   const tp=lookup(travelTbl,tMin),wp=lookup(workTbl,wMin);
   document.getElementById('e-travel-price').textContent=fmt(tp);
   document.getElementById('e-work-price').textContent=fmt(wp);
-  const wasteP=waste<=3?500:500+(waste-3)*100;
-  document.getElementById('e-waste-price').textContent=fmt(wasteP);
-  document.getElementById('b-glass').textContent=fmt(g.price);
+  document.getElementById('b-glass').textContent=fmt(price);
+  document.getElementById('b-order').textContent='—';
   document.getElementById('b-travel').textContent=fmt(tp);
   document.getElementById('b-work').textContent=fmt(wp);
-  document.getElementById('b-waste').textContent=fmt(wasteP);
+
+  updateWasteUI(waste);
   recalcTotal();
 }
+
+function setActiveSection(which){
+  const s1=document.getElementById('sec-shaku');
+  const s2=document.getElementById('sec-sqm');
+  if(which==='shaku'){
+    s1.classList.remove('disabled');s1.style.opacity='1';
+    s2.classList.add('disabled');s2.style.opacity='0.4';s2.style.pointerEvents='none';
+  } else {
+    s2.classList.remove('disabled');s2.style.opacity='1';
+    s1.classList.add('disabled');s1.style.opacity='0.4';s1.style.pointerEvents='none';
+  }
+}
+
+function clearShaku(){
+  // ②を選んだとき①をリセット
+  setActiveSection('sqm');
+  document.getElementById('b-glass').textContent='—';
+  document.getElementById('e-glass-range').textContent='—';
+  document.getElementById('e-glass-price').textContent='—';
+}
+
+function updateWasteUI(waste){
+  const kino=isKino();
+  const tanbanEl=document.getElementById('waste-rule-tanban');
+  const kinoEl=document.getElementById('waste-rule-kino');
+  const kinoNote=document.getElementById('kino-note');
+  let wasteP;
+  if(!kino){
+    wasteP=waste<=3?500:500+(waste-3)*100;
+    tanbanEl.style.display='';kinoEl.style.display='none';
+    document.getElementById('e-waste-price').textContent=fmt(wasteP);
+    kinoNote.style.display='none';
+  } else {
+    wasteP=waste*300;
+    tanbanEl.style.display='none';kinoEl.style.display='';
+    document.getElementById('e-waste-price-kino').textContent=fmt(wasteP);
+    kinoNote.style.display='';
+  }
+  document.getElementById('b-waste').textContent=fmt(wasteP);
+  return wasteP;
+}
+
 function recalcTotal(){
-  const glassEl=document.getElementById('b-glass').textContent;
-  const orderEl=document.getElementById('b-order').textContent;
-  const travelEl=document.getElementById('b-travel').textContent;
-  const workEl=document.getElementById('b-work').textContent;
-  const wasteEl=document.getElementById('b-waste').textContent;
   const parse=s=>s==='—'?0:parseInt(s.replace(/[¥,]/g,''))||0;
-  const glass=parse(glassEl);
-  const order=parse(orderEl);
-  const travel=parse(travelEl);
-  const work=parse(workEl);
-  const waste=parse(wasteEl);
+  const glass=parse(document.getElementById('b-glass').textContent);
+  const order=parse(document.getElementById('b-order').textContent);
+  const travel=parse(document.getElementById('b-travel').textContent);
+  const work=parse(document.getElementById('b-work').textContent);
+  const waste=parse(document.getElementById('b-waste').textContent);
   const tMin=parseInt(document.getElementById('e-travel').value)||0;
   const wMin=parseInt(document.getElementById('e-work').value)||0;
   const tp=lookup(travelTbl,tMin),wp=lookup(workTbl,wMin);
@@ -663,6 +772,9 @@ const secuoTypes=['lp6_30','lp3f3a_30','lp5t_60','lp2f3a_60','lp5t_sp','lp2f3a_s
 const lamiTypes=['lp6z','lp2f4az','l4p6z','l4lp2f4az','vnp3lep3','vnp3leg3','l51p6z','l51p2f4az'];
 
 function calcOrder(){
+  // ②を有効化・①を無効化
+  clearShaku();
+
   const type=document.getElementById('o-type').value;
   const area=parseFloat(document.getElementById('o-area').value)||0;
   const gc=parseInt(document.getElementById('o-gretchan').value)||0;
@@ -723,6 +835,8 @@ function calcOrder(){
   unitEl.textContent=fmt(unit)+'/㎡';
   totalEl.textContent=fmt(Math.round(unit*area));
   document.getElementById('b-order').textContent=fmt(Math.round(unit*area));
+  const waste=parseInt(document.getElementById('e-waste').value)||1;
+  updateWasteUI(waste);
   recalcTotal();
 }
 function showPage(id,idx){
@@ -739,6 +853,16 @@ function showCat(id,btn){
   catIds.forEach(i=>{const el=document.getElementById('cat-'+i);if(el)el.classList.remove('active');});
   document.querySelectorAll('#cat-tabs .cat-btn').forEach(b=>b.classList.remove('active'));
   document.getElementById('cat-'+id).classList.add('active');btn.classList.add('active');
+}
+function calcTravel(){
+  const tMin=parseInt(document.getElementById('e-travel').value)||0;
+  const wMin=parseInt(document.getElementById('e-work').value)||0;
+  const tp=lookup(travelTbl,tMin),wp=lookup(workTbl,wMin);
+  document.getElementById('e-travel-price').textContent=fmt(tp);
+  document.getElementById('e-work-price').textContent=fmt(wp);
+  document.getElementById('b-travel').textContent=fmt(tp);
+  document.getElementById('b-work').textContent=fmt(wp);
+  recalcTotal();
 }
 calcEst();calcOrder();recalcTotal();
 const n=document.querySelectorAll('.mnav-btn').length;
