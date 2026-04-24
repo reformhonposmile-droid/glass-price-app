@@ -372,7 +372,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
     <div class="esec" id="sec-sqm">
       <div class="esec-title"><span class="num">②</span>ガラス代（仕入れ・㎡出し）</div>
       <div class="cgrp"><div class="clbl">品種</div>
-        <select id="o-type" onchange="calcOrder()">
+        <select id="o-type" onchange="calcOrder(true)">
           <optgroup label="── フロートガラス ──">
             <option value="fl3">3mm透明（FL3）</option>
             <option value="fl5">5mm透明（FL5）</option>
@@ -447,9 +447,9 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       </div>
       <div class="cgrp">
         <div class="irow">
-          <div><div class="clbl">面積（㎡）</div><input type="number" id="o-area" value="0.5" min="0.001" step="0.001" inputmode="decimal" oninput="calcOrder()"></div>
+          <div><div class="clbl">面積（㎡）</div><input type="number" id="o-area" value="0.5" min="0.001" step="0.001" inputmode="decimal" oninput="calcOrder(true)"></div>
           <div id="o-gretchan-wrap" style="display:none"><div class="clbl">グレチャン</div>
-            <select id="o-gretchan" onchange="calcOrder()" style="height:40px">
+            <select id="o-gretchan" onchange="calcOrder(true)" style="height:40px">
               <option value="0">なし</option>
               <option value="1">あり</option>
             </select>
@@ -771,9 +771,9 @@ const kyokaTypes=['pt4','pt5','pt6','fbt4'];
 const secuoTypes=['lp6_30','lp3f3a_30','lp5t_60','lp2f3a_60','lp5t_sp','lp2f3a_sp'];
 const lamiTypes=['lp6z','lp2f4az','l4p6z','l4lp2f4az','vnp3lep3','vnp3leg3','l51p6z','l51p2f4az'];
 
-function calcOrder(){
-  // ②を有効化・①を無効化
-  clearShaku();
+function calcOrder(userAction=false){
+  // ユーザー操作時だけ排他制御
+  if(userAction) clearShaku();
 
   const type=document.getElementById('o-type').value;
   const area=parseFloat(document.getElementById('o-area').value)||0;
@@ -864,6 +864,11 @@ function calcTravel(){
   document.getElementById('b-work').textContent=fmt(wp);
   recalcTotal();
 }
+// 初期状態：両セクションを有効に
+document.getElementById('sec-shaku').style.opacity='1';
+document.getElementById('sec-shaku').style.pointerEvents='auto';
+document.getElementById('sec-sqm').style.opacity='1';
+document.getElementById('sec-sqm').style.pointerEvents='auto';
 calcEst();calcOrder();recalcTotal();
 const n=document.querySelectorAll('.mnav-btn').length;
 const ind=document.getElementById('main-ind');
