@@ -359,6 +359,10 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
       <div class="esec-note">適用範囲：<span id="e-glass-range">—</span>　→　<strong id="e-glass-price">—</strong></div>
+      <div class="cgrp" style="margin-top:10px"><div class="clbl">枚数</div>
+        <input type="number" id="e-count-shaku" value="1" min="1" max="99" inputmode="numeric" oninput="clearSqm();calcEst();">
+      </div>
+      <div class="esec-note">ガラス代合計：<strong id="e-glass-total">—</strong></div>
     </div>
 
     <div class="esec" id="sec-sqm">
@@ -448,7 +452,10 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
           </div>
         </div>
       </div>
-      <div class="esec-note">単価：<strong id="o-unit">—</strong>　合計：<strong id="o-total-price">—</strong></div>
+      <div class="cgrp" style="margin-top:10px"><div class="clbl">枚数</div>
+        <input type="number" id="e-count-sqm" value="1" min="1" max="99" inputmode="numeric" oninput="calcOrder(true);">
+      </div>
+      <div class="esec-note">単価：<strong id="o-unit">—</strong>　合計（枚数×面積）：<strong id="o-total-price">—</strong></div>
     </div>
 
     <div class="esec">
@@ -473,7 +480,8 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       <div class="brow"><span class="lbl">③出張費</span><span class="amt" id="b-travel">—</span></div>
       <div class="brow"><span class="lbl">③施工費</span><span class="amt" id="b-work">—</span></div>
       <div class="brow"><span class="lbl">④廃材処分費</span><span class="amt" id="b-waste">—</span></div>
-      <div class="brow"><span class="lbl">⑤諸経費（5%・最低2,000円）</span><span class="amt" id="b-misc">—</span></div>
+      <div class="brow" id="b-delivery-row" style="display:none"><span class="lbl">⑤メーカー配送料</span><span class="amt" id="b-delivery">—</span></div>
+      <div class="brow"><span class="lbl" id="misc-label">⑤諸経費（5%・最低2,000円）</span><span class="amt" id="b-misc">—</span></div>
       <div class="btotal"><span>合計（税別）</span><span class="amt" id="b-total">—</span></div>
     </div>
     <div class="total-card">
@@ -564,23 +572,29 @@ function getGlass(type,w,h){
   const hl=ri===0?`H≤${d.rows[0]}`:`H${d.rows[ri-1]+1}〜${d.rows[ri]}`;
   return{price:p,range:`${wl}mm / ${hl}mm`};
 }
-// 単板ガラス判定（透明・型・摺 → 単板、それ以外 → 機能）
+// 単板ガラス判定
 const tanbanTypes=['fl3','fl2','fl5','f4a','polka','g3','g2'];
 const tanbanOrderTypes=['fl3','fl5','fl6','fl8','f4a_m','f6a','g3_m','g5'];
+const kinoOrderTypes=['pt4', 'pt5', 'pt6', 'fbt4', 'ap6d', 'ap10d', 'ap3f4d', 'ap3pwd', 'ap3fwd', 'arsp3', 'arsp5', 'arsp_f4', 'arsp_pw', 'arsp_fw', 'arspj3', 'arspj5', 'arspj_f4', 'arspj_pw', 'arspj_fw', 'anp3', 'anp5', 'anp_f4', 'anp_pw', 'anp_fw', 'lp6_30', 'lp3f3a_30', 'lp5t_60', 'lp2f3a_60', 'lp5t_sp', 'lp2f3a_sp', 'lp6z', 'lp2f4az', 'l4p6z', 'l4lp2f4az', 'vnp3lep3', 'vnp3leg3', 'l51p6z', 'l51p2f4az'];
 
 function isKino(){
-  // ①が有効なら①の品種で判定、②が有効なら②の品種で判定
-  const shakuActive=!document.getElementById('sec-shaku').classList.contains('disabled');
-  const sqmActive=!document.getElementById('sec-sqm').classList.contains('disabled');
+  const s1active=!document.getElementById('sec-shaku').classList.contains('disabled');
   const shakuVal=document.getElementById('e-type').value;
   const sqmVal=document.getElementById('o-type').value;
-  if(shakuActive&&document.getElementById('b-glass').textContent!=='—'){
-    return !tanbanTypes.includes(shakuVal);
+  // ①が有効で入力ありなら①で判定
+  if(s1active&&document.getElementById('b-glass').textContent!=='—'){
+    return !tanbanTypes.includes(shakuVal) && !shakuVal.startsWith('ami_') ? true
+         : shakuVal.startsWith('ami_') ? true : false;
   }
-  if(sqmActive&&document.getElementById('b-order').textContent!=='—'){
-    return !tanbanOrderTypes.includes(sqmVal);
+  // ②が有効で入力ありなら②で判定
+  if(!s1active&&document.getElementById('b-order').textContent!=='—'){
+    return kinoOrderTypes.includes(sqmVal);
   }
   return false;
+}
+
+function isSqmActive(){
+  return document.getElementById('sec-shaku').classList.contains('disabled');
 }
 
 function getAmiPrice(typeBase, w, h){
@@ -598,25 +612,28 @@ function calcEst(){
   const type=document.getElementById('e-type').value;
   const w=parseInt(document.getElementById('e-w').value)||0;
   const h=parseInt(document.getElementById('e-h').value)||0;
+  const count=parseInt(document.getElementById('e-count-shaku').value)||1;
   const tMin=parseInt(document.getElementById('e-travel').value)||0;
   const wMin=parseInt(document.getElementById('e-work').value)||0;
   const waste=parseInt(document.getElementById('e-waste').value)||1;
 
   let price=null,range='—';
-  if(type.startsWith('ami_t')){
+  if(type==='ami_t'){
     const r=getAmiPrice('ami_t',w,h);price=r.price;range=r.range;
-  } else if(type.startsWith('ami_k')){
+  } else if(type==='ami_k'){
     const r=getAmiPrice('ami_k',w,h);price=r.price;range=r.range;
   } else {
     const g=getGlass(type,w,h);price=g.price;range=g.range;
   }
   document.getElementById('e-glass-range').textContent=range;
   document.getElementById('e-glass-price').textContent=fmt(price);
+  const glassTotal=price!=null?price*count:null;
+  document.getElementById('e-glass-total').textContent=fmt(glassTotal);
 
   const tp=lookup(travelTbl,tMin),wp=lookup(workTbl,wMin);
   document.getElementById('e-travel-price').textContent=fmt(tp);
   document.getElementById('e-work-price').textContent=fmt(wp);
-  document.getElementById('b-glass').textContent=fmt(price);
+  document.getElementById('b-glass').textContent=fmt(glassTotal);
   document.getElementById('b-travel').textContent=fmt(tp);
   document.getElementById('b-work').textContent=fmt(wp);
 
@@ -654,20 +671,36 @@ function clearSqm(){
 
 function updateWasteUI(waste){
   const kino=isKino();
+  const sqm=isSqmActive();
   const tanbanEl=document.getElementById('waste-rule-tanban');
   const kinoEl=document.getElementById('waste-rule-kino');
   const kinoNote=document.getElementById('kino-note');
+  const deliveryRow=document.getElementById('b-delivery-row');
+  const miscLabel=document.getElementById('misc-label');
   let wasteP;
   if(!kino){
     wasteP=waste<=3?500:500+(waste-3)*100;
     tanbanEl.style.display='';kinoEl.style.display='none';
     document.getElementById('e-waste-price').textContent=fmt(wasteP);
     kinoNote.style.display='none';
+    deliveryRow.style.display='none';
+    document.getElementById('b-delivery').textContent='—';
+    miscLabel.textContent='⑤諸経費（5%・最低2,000円）';
   } else {
     wasteP=waste*300;
     tanbanEl.style.display='none';kinoEl.style.display='';
     document.getElementById('e-waste-price-kino').textContent=fmt(wasteP);
     kinoNote.style.display='';
+    // ㎡出し選択時はメーカー送料6,000円を表示
+    if(sqm){
+      deliveryRow.style.display='';
+      document.getElementById('b-delivery').textContent='¥6,000';
+      miscLabel.textContent='⑥諸経費（5%・最低2,000円）';
+    } else {
+      deliveryRow.style.display='none';
+      document.getElementById('b-delivery').textContent='—';
+      miscLabel.textContent='⑤諸経費（5%・最低2,000円）';
+    }
   }
   document.getElementById('b-waste').textContent=fmt(wasteP);
   return wasteP;
@@ -680,6 +713,7 @@ function recalcTotal(){
   const travel=parse(document.getElementById('b-travel').textContent);
   const work=parse(document.getElementById('b-work').textContent);
   const waste=parse(document.getElementById('b-waste').textContent);
+  const delivery=parse(document.getElementById('b-delivery').textContent);
   const tMin=parseInt(document.getElementById('e-travel').value)||0;
   const wMin=parseInt(document.getElementById('e-work').value)||0;
   const tp=lookup(travelTbl,tMin),wp=lookup(workTbl,wMin);
@@ -690,7 +724,7 @@ function recalcTotal(){
     document.getElementById('e-tax').textContent='税込：—';
     return;
   }
-  const sub=glass+order+travel+work+waste;
+  const sub=glass+order+travel+work+waste+delivery;
   const misc=Math.max(2000,Math.round(sub*0.05));
   const total=sub+misc;
   document.getElementById('b-misc').textContent=fmt(misc);
@@ -827,10 +861,12 @@ function calcOrder(userAction=false){
   // 通常㎡テーブル
   let unit=null;
   for(const [max,p] of d){if(area<=max){unit=p;break;}}
-  if(!unit){unitEl.textContent='範囲外';totalEl.textContent='—';document.getElementById('b-order').textContent='—';recalcTotal();return;}
+  if(!unit){unitEl.textContent='範囲外';totalEl.textContent='—';document.getElementById('b-order').textContent='—';const w0=parseInt(document.getElementById('e-waste').value)||1;updateWasteUI(w0);recalcTotal();return;}
+  const count=parseInt(document.getElementById('e-count-sqm').value)||1;
+  const orderTotal=Math.round(unit*area*count);
   unitEl.textContent=fmt(unit)+'/㎡';
-  totalEl.textContent=fmt(Math.round(unit*area));
-  document.getElementById('b-order').textContent=fmt(Math.round(unit*area));
+  totalEl.textContent=fmt(orderTotal)+(count>1?` (${count}枚)`:'');
+  document.getElementById('b-order').textContent=fmt(orderTotal);
   const waste=parseInt(document.getElementById('e-waste').value)||1;
   updateWasteUI(waste);
   recalcTotal();
