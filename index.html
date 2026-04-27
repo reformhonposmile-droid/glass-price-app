@@ -725,7 +725,9 @@ function recalcTotal(){
     return;
   }
   const sub=glass+order+travel+work+waste+delivery;
-  const misc=Math.max(2000,Math.round(sub*0.05));
+  const miscRaw=sub*0.05;
+  const miscCeil=Math.ceil(miscRaw/100)*100;  // 100円単位切り上げ
+  const misc=Math.max(2000,miscCeil);
   const total=sub+misc;
   document.getElementById('b-misc').textContent=fmt(misc);
   document.getElementById('b-total').textContent=fmt(total);
@@ -820,43 +822,52 @@ function calcOrder(userAction=false){
 
   // 強化ガラス（枚/㎡）
   if(kyokaTypes.includes(type)){
+    const count=parseInt(document.getElementById('e-count-sqm').value)||1;
     const unit=area<=0.3?d.sheet:d.sqm;
-    const total=area<=0.3?d.sheet:Math.round(d.sqm*area);
+    const total=area<=0.3?d.sheet*count:Math.round(d.sqm*area*count);
     unitEl.textContent=area<=0.3?fmt(d.sheet)+'/枚':fmt(d.sqm)+'/㎡';
-    totalEl.textContent=fmt(total);
+    totalEl.textContent=fmt(total)+(count>1?` (${count}枚)`:'');
     document.getElementById('b-order').textContent=fmt(total);
-    recalcTotal();return;
+    const waste=parseInt(document.getElementById('e-waste').value)||1;
+    updateWasteUI(waste);recalcTotal();return;
   }
   // セキュオ（枚/㎡/4㎡〜）
   if(secuoTypes.includes(type)){
+    const count=parseInt(document.getElementById('e-count-sqm').value)||1;
     let unit,total;
-    if(area<=0.3){unit=d.s;total=d.s;}
-    else if(area<=4){unit=d.m;total=Math.round(d.m*area);}
-    else{unit=d.l;total=d.l?Math.round(d.l*area):null;}
+    if(area<=0.3){unit=d.s;total=d.s*count;}
+    else if(area<=4){unit=d.m;total=Math.round(d.m*area*count);}
+    else{unit=d.l;total=d.l?Math.round(d.l*area*count):null;}
     unitEl.textContent=area<=0.3?fmt(unit)+'/枚':fmt(unit)+'/㎡';
-    totalEl.textContent=fmt(total);
+    totalEl.textContent=fmt(total)+(count>1?` (${count}枚)`:'');
     document.getElementById('b-order').textContent=fmt(total);
-    recalcTotal();return;
+    const waste=parseInt(document.getElementById('e-waste').value)||1;
+    updateWasteUI(waste);recalcTotal();return;
   }
   // ラミペーン・スペーシア・ソノグラス（枚/㎡）
   if(lamiTypes.includes(type)){
+    const count=parseInt(document.getElementById('e-count-sqm').value)||1;
     const unit=area<=0.3?d.s:d.m;
-    const total=area<=0.3?d.s:Math.round(d.m*area);
+    const total=area<=0.3?d.s*count:Math.round(d.m*area*count);
     unitEl.textContent=area<=0.3?fmt(d.s)+'/枚':fmt(d.m)+'/㎡';
-    totalEl.textContent=fmt(total);
+    totalEl.textContent=fmt(total)+(count>1?` (${count}枚)`:'');
     document.getElementById('b-order').textContent=fmt(total);
-    recalcTotal();return;
+    const waste=parseInt(document.getElementById('e-waste').value)||1;
+    updateWasteUI(waste);recalcTotal();return;
   }
   // ペアマルチ系（グレチャンあり/なし）
   if(gretchanTypes.includes(type)){
+    const count=parseInt(document.getElementById('e-count-sqm').value)||1;
     const tbl=gc===1?d.g1:d.g0;
     let unit=null;
     for(const [max,p] of tbl){if(area<=max){unit=p;break;}}
-    if(!unit){unitEl.textContent='範囲外';totalEl.textContent='—';document.getElementById('b-order').textContent='—';recalcTotal();return;}
+    if(!unit){unitEl.textContent='範囲外';totalEl.textContent='—';document.getElementById('b-order').textContent='—';const w0=parseInt(document.getElementById('e-waste').value)||1;updateWasteUI(w0);recalcTotal();return;}
+    const pairTotal=Math.round(unit*area*count);
     unitEl.textContent=fmt(unit)+'/㎡';
-    totalEl.textContent=fmt(Math.round(unit*area));
-    document.getElementById('b-order').textContent=fmt(Math.round(unit*area));
-    recalcTotal();return;
+    totalEl.textContent=fmt(pairTotal)+(count>1?` (${count}枚)`:'');
+    document.getElementById('b-order').textContent=fmt(pairTotal);
+    const waste=parseInt(document.getElementById('e-waste').value)||1;
+    updateWasteUI(waste);recalcTotal();return;
   }
   // 通常㎡テーブル
   let unit=null;
