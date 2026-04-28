@@ -198,19 +198,6 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
         </div>
       </div>
     </div>
-    <div class="pcard">
-      <div class="pcard-img contain"><img id="img-spaceia" src="" alt="スペーシア"></div>
-      <div class="pcard-body">
-        <div class="badge badge-red">受注生産</div>
-        <div class="pcard-title">真空ガラス（スペーシア）</div>
-        <div class="pcard-sub">フロートの約4倍・ペアマルチの約2倍の断熱性能。6.2mmの薄さで単板サッシへ入れ替え可能。結露抑制効果も。外気温-23℃まで結露しない。</div>
-        <div class="pcard-specs">
-          <div class="spec-chip">厚み <strong>6.2mm</strong></div>
-          <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
-          <div class="spec-chip">断熱 <strong>一枚の約4倍</strong></div>
-        </div>
-      </div>
-    </div>
   </div>
 
   <!-- Low-E -->
@@ -259,6 +246,19 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
 
   <!-- 機能・特殊 -->
   <div id="cat-kino" class="cat-content">
+    <div class="pcard">
+      <div class="pcard-img contain"><img id="img-spaceia" src="" alt="スペーシア"></div>
+      <div class="pcard-body">
+        <div class="badge badge-red">受注生産</div>
+        <div class="pcard-title">真空ガラス（スペーシア）</div>
+        <div class="pcard-sub">フロートの約4倍・ペアマルチの約2倍の断熱性能。6.2mmの薄さで単板サッシへ入れ替え可能。結露抑制効果も。外気温-23℃まで結露しない。</div>
+        <div class="pcard-specs">
+          <div class="spec-chip">厚み <strong>6.2mm</strong></div>
+          <div class="spec-chip">発注先 <strong>日本板硝子</strong></div>
+          <div class="spec-chip">断熱 <strong>一枚の約4倍</strong></div>
+        </div>
+      </div>
+    </div>
     <div class="pcard">
       <div class="pcard-img contain"><img id="img-secuo" src="" alt="セキュオ"></div>
       <div class="pcard-body">
@@ -331,7 +331,7 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
 <!-- 見積もり -->
 <div id="p-estimate" class="page">
   <div class="page-inner">
-    <div class="tip-box">【単板ガラス修理】お客様宅へ伺う場合の見積もり計算機</div>
+    <div class="tip-box">ガラス修理見積もり計算機</div>
 
     <div class="esec" id="sec-shaku">
       <div class="esec-title"><span class="num">①</span>ガラス代（在庫・尺寸出し）</div>
@@ -485,9 +485,10 @@ input[type=number]:focus,select:focus{border-color:var(--accent2)}
       <div class="btotal"><span>合計（税別）</span><span class="amt" id="b-total">—</span></div>
     </div>
     <div class="total-card">
-      <div class="lbl">お見積り金額（税別）</div>
-      <div class="price" id="e-total">—</div>
-      <div class="sub" id="e-tax">税込：—</div>
+      <div class="lbl">お見積り金額 </div>
+      <div style="font-size:16px;color:rgba(255,255,255,0.6);font-family:'DM Mono',monospace;margin-bottom:4px" id="e-total">—</div>
+      <div class="lbl" style="margin-top:8px;font-size:12px">税込金額</div>
+      <div style="font-size:36px;font-weight:700;color:#fff;font-family:'DM Mono',monospace;letter-spacing:-0.02em" id="e-tax">—</div>
     </div>
     <div class="note-green">※施工時間が2時間を超える場合は日分割計算で算出してください。<br>（例）2時間半かかる場合 → ¥12,000〜</div>
     <div style="background:#fff0e0;border:1px solid #f0a040;border-radius:10px;padding:10px 12px;font-size:11px;color:#7c3000;line-height:1.6;margin-top:10px" id="kino-note" style="display:none">
@@ -731,8 +732,8 @@ function recalcTotal(){
   const total=sub+misc;
   document.getElementById('b-misc').textContent=fmt(misc);
   document.getElementById('b-total').textContent=fmt(total);
-  document.getElementById('e-total').textContent=fmt(total);
-  document.getElementById('e-tax').textContent='税込：'+fmt(Math.round(total*1.1));
+  document.getElementById('e-total').textContent=fmt(total)+'（税別）';
+  document.getElementById('e-tax').textContent=fmt(Math.round(total*1.1));
 }
 // 仕入れガラス価格データ（単価テーブル）
 // 形式: [最大面積, 単価] or [最大面積, 単価_グレチャンなし, 単価_グレチャンあり]
